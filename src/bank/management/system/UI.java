@@ -1,11 +1,17 @@
 package bank.management.system;
+import com.toedter.calendar.JDateChooser;
+
 import javax.swing.*;
-import javax.swing.border.Border;
+import javax.swing.plaf.ColorUIResource;
+import javax.swing.plaf.basic.BasicRadioButtonUI;
+import javax.swing.text.*;
+import javax.swing.text.AbstractDocument;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
-public abstract class UI extends JFrame{
+public abstract class UI extends JFrame {
 
     private int width, height;
 
@@ -25,6 +31,7 @@ public abstract class UI extends JFrame{
         int centerY = (screenSize.height - height) / 2;
         setLocation(centerX, centerY);
     }
+
     //Image addition
     protected void addImage(ImageIcon imageIcon, int x, int y, int width, int height) {
         Image image = imageIcon.getImage();  // Get the Image from the ImageIcon
@@ -37,7 +44,7 @@ public abstract class UI extends JFrame{
     }
 
     //Label
-    protected void addLabel(String text, String fontName, int fontStyle, int fontSize, int x, int y, boolean center) {
+    protected void addLabel(String text, String fontName, int fontStyle, int fontSize, int x, int y, boolean center, boolean colorChange, String color) {
         JLabel label = new JLabel(text); //object thingy
         label.setFont(new Font(fontName, fontStyle, fontSize));//using parameters
         // Enable antialiasing for smoother text rendering
@@ -59,17 +66,20 @@ public abstract class UI extends JFrame{
         if (center) {
             x = (width - label.getWidth()) / 2;
         }
+        if (colorChange) {
+            label.setForeground(Color.decode(color)); // Set font color
+        }
 
         // Set final position
         //taking extra 5 px cuz no clue why the fuck it wont take it any other way!????
-        label.setBounds(x, y, label.getWidth()+5, label.getHeight());
+        label.setBounds(x, y, label.getWidth() + 5, label.getHeight());
         add(label);
     }
 
     //label + text Field
     protected JTextField addLabelWithTextField2(String text, String fontName, int fontStyle, int fontSize,
-                                              int x, int y, int textFieldWidth, int textFieldHeight,
-                                              int labelWidth, int spacing) {
+                                                int x, int y, int textFieldWidth, int textFieldHeight,
+                                                int labelWidth, int spacing) {
         // Create label
         JLabel label = new JLabel(text);
         label.setFont(new Font(fontName, fontStyle, fontSize));
@@ -81,17 +91,21 @@ public abstract class UI extends JFrame{
         // Create text field
         JTextField textField = new JTextField();
         textField.setFont(new Font(fontName, Font.BOLD, 16));  // Increased size for better visibility
-        textField.setBounds(x + labelWidth + spacing, y, textFieldWidth, textFieldHeight);
+        textField.setBounds(x + spacing, y, textFieldWidth, textFieldHeight);
 
-        // Make it rounded rounder or something along those lines
+        // Set semi-transparent background
+        textField.setBackground(new Color(255, 255, 255, 180));
+
+        // Make it rounded
         makeRoundedTextField(textField, textFieldWidth, textFieldHeight, 20);
         add(textField);
         return textField;
-    } // uses another function to make the things rounded! aka helper function
+    }
+
     //label + password Field (same as above just hide things)
     protected JPasswordField addLabelWithPasswordField2(String text, String fontName, int fontStyle, int fontSize,
-                                                      int x, int y, int textFieldWidth, int textFieldHeight,
-                                                      int labelWidth, int spacing) {
+                                                        int x, int y, int textFieldWidth, int textFieldHeight,
+                                                        int labelWidth, int spacing) {
         // Create label
         JLabel label = new JLabel(text);
         label.setFont(new Font(fontName, fontStyle, fontSize));
@@ -121,6 +135,368 @@ public abstract class UI extends JFrame{
         add(passwordField);
         return passwordField;
     }
+
+
+//    protected JTextField addLabelWithTextField2(String text, String fontName, int fontStyle, int fontSize,
+//                                              int x, int y, int textFieldWidth, int textFieldHeight,
+//                                              int labelWidth, int spacing) {
+//        // Create label
+//        JLabel label = new JLabel(text);
+//        label.setFont(new Font(fontName, fontStyle, fontSize));
+//        label.setForeground(Color.BLACK);
+//        label.setSize(labelWidth, label.getPreferredSize().height);
+//        label.setBounds(x, y, labelWidth, label.getHeight());
+//        add(label);
+//
+//        // Create text field
+//        JTextField textField = new JTextField();
+//        textField.setFont(new Font(fontName, Font.BOLD, 16));  // Increased size for better visibility
+////        textField.setBounds(x + labelWidth + spacing, y, textFieldWidth, textFieldHeight);
+//        textField.setBounds(x + spacing, y, textFieldWidth, textFieldHeight);
+//
+//        // Make it rounded rounder or something along those lines
+//        makePlainTextField(textField, textFieldWidth, textFieldHeight);
+//        makeRoundedTextFieldWithOpacity(textField, 20, 0.8f); // 80% opacity
+//        add(textField);
+//        return textField;
+//    } // uses another function to make the things rounded! aka helper function
+//
+//
+//    //label + password Field (same as above just hide things)
+//    protected JPasswordField addLabelWithPasswordField2(String text, String fontName, int fontStyle, int fontSize,
+//                                                        int x, int y, int textFieldWidth, int textFieldHeight,
+//                                                        int labelWidth, int spacing) {
+//        // Create label
+//        JLabel label = new JLabel(text);
+//        label.setFont(new Font(fontName, fontStyle, fontSize));
+//        label.setForeground(Color.BLACK);
+//        label.setSize(labelWidth, label.getPreferredSize().height);
+//        label.setBounds(x, y, labelWidth, label.getHeight());
+//        add(label);
+//
+//        // Create text field
+//        JPasswordField passwordField = new JPasswordField();
+//        passwordField.setFont(new Font(fontName, Font.BOLD, 16));  // Increased size for better visibility
+//        passwordField.setBounds(x + labelWidth + spacing, y, textFieldWidth, textFieldHeight);
+//
+////        // Make it rounded
+////        passwordField.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10)); // Inner padding
+////        passwordField.setBackground(Color.WHITE);
+////        passwordField.setOpaque(false); // Allow transparency for custom painting
+////        passwordField.setPreferredSize(new Dimension(textFieldWidth, textFieldHeight));
+////
+////        // Apply a custom border for rounded effect
+////        passwordField.setBorder(BorderFactory.createCompoundBorder(
+////                BorderFactory.createLineBorder(Color.BLACK, 2, true),  // Outer rounded border
+////                BorderFactory.createEmptyBorder(5, 10, 5, 10)  // Inner padding
+////        ));
+//        makePlainTextField(passwordField, textFieldWidth, textFieldHeight);
+//        makeRoundedTextFieldWithOpacity(passwordField, 20, 0.8f); // 80% opacity
+//        add(passwordField);
+//        return passwordField;
+//    }
+
+    //to make radio button with label prev:
+//    protected void addLabelWithRadioButton3(String text, String fontName, int fontStyle, int fontSize,
+//                                                int x, int y, int labelWidth, int radioFontSize, int rx1, int ry1, int rx2, int ry2,
+//                                                int radioWidth, int radioHeight, int radioWidth2,
+//                                                String radioButtonLabel1, String radioButtonLabel2 ) {
+//        // Create label
+//        JLabel label = new JLabel(text);
+//        label.setFont(new Font(fontName, fontStyle, fontSize));
+//        label.setForeground(Color.WHITE);
+//        label.setSize(labelWidth, label.getPreferredSize().height);
+//        label.setBounds(x, y, labelWidth, label.getHeight());
+//        add(label);
+//
+////        // Create text field
+////        JTextField textField = new JTextField();
+////        textField.setFont(new Font(fontName, Font.BOLD, 16));  // Increased size for better visibility
+//////        textField.setBounds(x + labelWidth + spacing, y, textFieldWidth, textFieldHeight);
+////        textField.setBounds(x + spacing, y, textFieldWidth, textFieldHeight);
+//        JRadioButton r1 = new JRadioButton(radioButtonLabel1);
+//        r1.setFont(new Font(fontName, fontStyle, radioFontSize));
+//        r1.setBounds(rx1, ry1, radioWidth, radioHeight);
+//        r1.setForeground(Color.BLACK);
+//        r1.setOpaque(false); // Make the entire button transparent
+//        r1.setContentAreaFilled(false);
+//        r1.setBorderPainted(false);
+//        add(r1);
+//
+//        // Create Radio Button 2
+//        JRadioButton r2 = new JRadioButton(radioButtonLabel2);
+//        r2.setFont(new Font(fontName, fontStyle, radioFontSize));
+//        r2.setBounds(rx2, ry2, radioWidth2, radioHeight);
+//        r2.setForeground(Color.BLACK);
+//        r2.setOpaque(false); // Make the entire button transparent
+//        r2.setContentAreaFilled(false);
+//        r2.setBorderPainted(false);
+//        add(r2);
+//
+//
+//        //grouping them as one:
+//        ButtonGroup buttonGroup = new ButtonGroup();
+//        buttonGroup.add(r1);
+//        buttonGroup.add(r2);
+//
+//
+////        // Make it rounded rounder or something along those lines
+////        makeRoundedTextField(textField, textFieldWidth, textFieldHeight, 20);
+////        add(textField);
+////        return textField;
+//    } // uses another function to make the things rounded! aka helper function
+//
+//    protected void addLabelWithRadioButton(String text, String fontName, int fontStyle, int fontSize,
+//                                            int x, int y, int labelWidth, int radioFontSize,
+//                                            int rx1, int ry1, int rx2, int ry2,
+//                                            int radioWidth, int radioHeight, int radioWidth2,
+//                                            String radioButtonLabel1, String radioButtonLabel2) {
+//        // Create Label
+//        JLabel label = new JLabel(text);
+//        label.setFont(new Font(fontName, fontStyle, fontSize));
+//        label.setForeground(Color.WHITE);
+//        label.setSize(labelWidth, label.getPreferredSize().height);
+//        label.setBounds(x, y, labelWidth, label.getHeight());
+//        add(label);
+//
+//        // Create Radio Button 1
+//        JRadioButton r1 = new JRadioButton(radioButtonLabel1);
+//        r1.setFont(new Font(fontName, fontStyle, radioFontSize));
+//        r1.setBounds(rx1, ry1, radioWidth, radioHeight);
+//        r1.setForeground(Color.BLACK);
+//
+//        // Make it fully transparent and blend with the background
+//        r1.setOpaque(false);
+//        r1.setContentAreaFilled(false);
+//        r1.setBorderPainted(false);
+//        r1.setFocusPainted(false); // Removes the focus border
+//        add(r1);
+//
+//        // Create Radio Button 2
+//        JRadioButton r2 = new JRadioButton(radioButtonLabel2);
+//        r2.setFont(new Font(fontName, fontStyle, radioFontSize));
+//        r2.setBounds(rx2, ry2, radioWidth2, radioHeight);
+//        r2.setForeground(Color.BLACK);
+//
+//        // Same transparency settings
+//        r2.setOpaque(false);
+//        r2.setContentAreaFilled(false);
+//        r2.setBorderPainted(false);
+//        r2.setFocusPainted(false);
+//        add(r2);
+//
+//        // Grouping the Radio Buttons
+//        ButtonGroup buttonGroup = new ButtonGroup();
+//        buttonGroup.add(r1);
+//        buttonGroup.add(r2);
+//    }
+
+   protected JDateChooser addLabelWithTextFieldWithCalender1(String text, String fontName, int fontStyle, int fontSize,
+                                                              int x, int y, int textFieldWidth, int textFieldHeight,
+                                                              int labelWidth, int spacing) {
+        // Create label
+        JLabel label = new JLabel(text);
+        label.setFont(new Font(fontName, fontStyle, fontSize));
+        label.setForeground(Color.WHITE);
+        label.setSize(labelWidth, label.getPreferredSize().height);
+        label.setBounds(x, y, labelWidth, label.getHeight());
+        add(label);
+
+        // Create text field
+//        JTextField textField = new JTextField();
+//        textField.setFont(new Font(fontName, Font.BOLD, 16));  // Increased size for better visibility
+////        textField.setBounds(x + labelWidth + spacing, y, textFieldWidth, textFieldHeight);
+//        textField.setBounds(x + spacing, y, textFieldWidth, textFieldHeight);
+
+
+        //icon for calender!!!!!
+        ImageIcon calendarIcon = new ImageIcon("C:\\xtra\\Last_Chance\\BMS\\src\\icons\\calendar.png");
+
+
+        JDateChooser dateChooser = new JDateChooser();
+        dateChooser.setFont(new Font(fontName, Font.BOLD, 16));  // Increased size for better visibility
+//        textField.setBounds(x + labelWidth + spacing, y, textFieldWidth, textFieldHeight);
+//        dateChooser.setForeground(Color.decode("#ffffff"));
+        dateChooser.setBounds(x + spacing, y, textFieldWidth, textFieldHeight);
+
+        // Make the editor (text field inside JDateChooser) transparent
+        JTextField editor = ((JTextField) dateChooser.getDateEditor().getUiComponent());
+        editor.setOpaque(false); // Makes the text field transparent
+        editor.setBackground(new Color(0, 0, 0, 0)); // Fully transparent
+        editor.setBorder(null); // Optional: Remove border for cleaner look
+
+        // Make it rounded rounder or something along those lines
+        makePlainTextField(editor, textFieldWidth, textFieldHeight);
+        makeRoundedTextFieldWithOpacity(editor, 20, 0.8f); // 80% opacity
+        add(dateChooser);
+        return dateChooser;
+    } // uses another function to make the things rounded! aka helper function
+
+
+    protected JDateChooser addLabelWithTextFieldWithCalender2(String text, String fontName, int fontStyle, int fontSize,
+                                                              int x, int y, int textFieldWidth, int textFieldHeight,
+                                                              int labelWidth, int spacing) {
+        // Create label
+        JLabel label = new JLabel(text);
+        label.setFont(new Font(fontName, fontStyle, fontSize));
+        label.setForeground(Color.WHITE);
+        label.setSize(labelWidth, label.getPreferredSize().height);
+        label.setBounds(x, y, labelWidth, label.getHeight());
+        add(label);
+
+        //icon for calender!!!!!
+        ImageIcon calendarIcon = new ImageIcon(new ImageIcon("C:\\xtra\\Last_Chance\\BMS\\src\\icons\\calendar.png").getImage().getScaledInstance(20, 25, Image.SCALE_SMOOTH));
+
+// Create JDateChooser
+        JDateChooser dateChooser = new JDateChooser();
+        dateChooser.setFont(new Font(fontName, Font.BOLD, 16));
+        dateChooser.setBounds(x + spacing, y, textFieldWidth, textFieldHeight);
+
+// Remove border & background
+        dateChooser.setBorder(null);
+        dateChooser.setOpaque(false);
+        dateChooser.setBackground(new Color(0, 0, 0, 0));
+
+// Get internal JTextField and make it transparent
+        JTextField editor = (JTextField) dateChooser.getDateEditor().getUiComponent();
+        editor.setOpaque(false);
+        editor.setBackground(new Color(0, 0, 0, 0));
+        editor.setBorder(null);
+        editor.setForeground(Color.WHITE);
+        editor.setCaretColor(Color.WHITE); // Ensure cursor is visible
+
+// Get the calendar button
+        JButton calendarButton = dateChooser.getCalendarButton();
+        calendarButton.setIcon(calendarIcon);
+        calendarButton.setOpaque(false);
+        calendarButton.setContentAreaFilled(false);
+        calendarButton.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2)); // Adjust outer spacing
+        calendarButton.setMargin(new Insets(2, 2, 2, 2)); // Adjust padding inside the button
+        calendarButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+// Ensure the button is correctly positioned within the layout
+        calendarButton.setFocusable(false);
+        editor.setFocusable(true);
+
+// Force UI refresh
+        SwingUtilities.invokeLater(() -> {
+            dateChooser.updateUI();
+            dateChooser.revalidate();
+            dateChooser.repaint();
+        });
+
+// Apply rounded border
+        makeRoundedCalenderField(dateChooser, textFieldWidth, textFieldHeight, 20);
+
+        add(dateChooser);
+        return dateChooser;
+    } // uses another function to make the things rounded! aka helper function
+
+    protected JDateChooser addLabelWithTextFieldWithCalender(String text, String fontName, int fontStyle, int fontSize,
+                                                             int x, int y, int textFieldWidth, int textFieldHeight,
+                                                             int labelWidth, int spacing) {
+        // Create label
+        JLabel label = new JLabel(text);
+        label.setFont(new Font(fontName, fontStyle, fontSize));
+        label.setForeground(Color.WHITE);
+        label.setSize(labelWidth, label.getPreferredSize().height);
+        label.setBounds(x, y, labelWidth, label.getHeight());
+        add(label);
+
+        //icon for calender!!!!!
+        ImageIcon calendarIcon = new ImageIcon(new ImageIcon("C:\\xtra\\Last_Chance\\BMS\\src\\icons\\calendar.png").getImage().getScaledInstance(20, 25, Image.SCALE_SMOOTH));
+
+// Create JDateChooser
+        JDateChooser dateChooser = new JDateChooser();
+        dateChooser.setFont(new Font(fontName, Font.BOLD, 16));
+        dateChooser.setBounds(x + spacing, y, textFieldWidth, textFieldHeight);
+
+// Remove border & background
+        dateChooser.setBorder(null);
+        dateChooser.setOpaque(false);
+        dateChooser.setBackground(new Color(0, 0, 0, 0));
+
+// Get internal JTextField and make it transparent
+        JTextField editor = (JTextField) dateChooser.getDateEditor().getUiComponent();
+        editor.setOpaque(false);
+        editor.setBackground(new Color(0, 0, 0, 0));
+        editor.setBorder(null);
+        editor.setForeground(Color.WHITE);
+        editor.setCaretColor(Color.WHITE); // Ensure cursor is visible
+
+// Get the calendar button
+        JButton calendarButton = dateChooser.getCalendarButton();
+        calendarButton.setIcon(calendarIcon);
+        calendarButton.setOpaque(false);
+        calendarButton.setContentAreaFilled(false);
+        calendarButton.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2)); // Adjust outer spacing
+        calendarButton.setMargin(new Insets(2, 2, 2, 2)); // Adjust padding inside the button
+        calendarButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+// Ensure the button is correctly positioned within the layout
+        calendarButton.setFocusable(false);
+        editor.setFocusable(true);
+
+// Force UI refresh
+        SwingUtilities.invokeLater(() -> {
+            dateChooser.updateUI();
+            dateChooser.revalidate();
+            dateChooser.repaint();
+        });
+        // Apply rounded border
+        makeRoundedCalenderField(dateChooser, textFieldWidth, textFieldHeight, 20);
+
+        add(dateChooser);
+        return dateChooser;
+    } // uses another function to make the things rounded! aka
+
+    protected void addLabelWithRadioButton2(String text, String fontName, int fontStyle, int fontSize,
+                                            int x, int y, int labelWidth, int radioFontSize,
+                                            int rx1, int ry1, int rx2, int ry2,
+                                            int radioWidth, int radioHeight, int radioWidth2,
+                                            String radioButtonLabel1, String radioButtonLabel2) {
+        // Create Label
+        JLabel label = new JLabel(text);
+        label.setFont(new Font(fontName, fontStyle, fontSize));
+        label.setForeground(Color.WHITE);
+        label.setSize(labelWidth, label.getPreferredSize().height);
+        label.setBounds(x, y, labelWidth, label.getHeight());
+        add(label);
+
+        // Create Custom Radio Button 1
+        JRadioButton r1 = new JRadioButton(radioButtonLabel1);
+        r1.setFont(new Font(fontName, fontStyle, radioFontSize));
+        r1.setBounds(rx1, ry1, radioWidth, radioHeight);
+        r1.setForeground(Color.BLACK);
+        styleCustomRadioButton(r1);
+        add(r1);
+
+        // Create Custom Radio Button 2
+        JRadioButton r2 = new JRadioButton(radioButtonLabel2);
+        r2.setFont(new Font(fontName, fontStyle, radioFontSize));
+        r2.setBounds(rx2, ry2, radioWidth2, radioHeight);
+        r2.setForeground(Color.BLACK);
+        styleCustomRadioButton(r2);
+        add(r2);
+
+
+        // Grouping the Radio Buttons
+        ButtonGroup buttonGroup = new ButtonGroup();
+        buttonGroup.add(r1);
+        buttonGroup.add(r2);
+    }
+
+    protected JRadioButton createRadioButton(String text, String fontName, int fontStyle, int fontSize,
+                                             int x, int y, int width, int height, Color textColor) {
+        JRadioButton radioButton = new JRadioButton(text);
+        radioButton.setFont(new Font(fontName, fontStyle, fontSize));
+        radioButton.setBounds(x, y, width, height);
+        radioButton.setForeground(textColor);
+        styleCustomRadioButton(radioButton);
+        add(radioButton);// Apply existing styling
+        return radioButton;
+    }
+
     //rounded buttons
     protected JButton addRoundedButton(String text, String fontName, int fontStyle, int fontSize,
                                      int x, int y, int width, int height, boolean opaque) {
@@ -249,7 +625,96 @@ public abstract class UI extends JFrame{
         return button;
     }
 
-    //helper functions:
+    //Regex to limit the input field data:
+    // one for text field and one for password:
+    protected void applyInputFilter(JTextField textField, String regex) {
+        ((AbstractDocument) textField.getDocument()).setDocumentFilter(new DocumentFilter() {
+            @Override
+            public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+                String currentText = fb.getDocument().getText(0, fb.getDocument().getLength());
+                String newText = currentText.substring(0, offset) + text + currentText.substring(offset + length);
+
+                if (newText.matches(regex)) {
+                    super.replace(fb, offset, length, text, attrs);
+                }
+            }
+        });
+    }
+    protected void applyInputFilter(JPasswordField passwordField, String regex) {
+        ((AbstractDocument) passwordField.getDocument()).setDocumentFilter(new DocumentFilter() {
+            @Override
+            public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+                String currentText = fb.getDocument().getText(0, fb.getDocument().getLength());
+                String newText = currentText.substring(0, offset) + text + currentText.substring(offset + length);
+
+                if (newText.matches(regex)) {
+                    super.replace(fb, offset, length, text, attrs);
+                }
+            }
+        });
+    }
+
+    //same regex with overloading for the warning msg will have to make the choice of
+    //either keeping this one or the one above this will include the warning msg as
+    //a parameter ofc so this may be an appropriate choice
+    //for now going with this one
+
+    protected void applyInputFilter(JTextComponent field, String regexField, String warningMsg, String hardRegex) {
+        // Real-time input filter
+        ((AbstractDocument) field.getDocument()).setDocumentFilter(new DocumentFilter() {
+            @Override
+            public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+                String newText = fb.getDocument().getText(0, fb.getDocument().getLength()) + text;
+                if (newText.matches(regexField) || newText.isEmpty()) {
+                    super.replace(fb, offset, length, text, attrs);
+                } else {
+                    Toolkit.getDefaultToolkit().beep(); // Small feedback for invalid input
+                }
+            }
+        });
+
+        // Focus Listener to show warning if needed
+        field.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                String input = field.getText().trim();
+                if (!input.matches(hardRegex)) {
+                    JOptionPane.showMessageDialog(null, warningMsg, "Warning", JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        });
+
+    }
+    protected void applyInputFilter(JPasswordField field, String regexField, String warningMsg, String hardRegex) {
+        // Real-time input filter
+        ((AbstractDocument) field.getDocument()).setDocumentFilter(new DocumentFilter() {
+            @Override
+            public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+                String newText = fb.getDocument().getText(0, fb.getDocument().getLength()) + text;
+                if (newText.matches(regexField) || newText.isEmpty()) {
+                    super.replace(fb, offset, length, text, attrs);
+                } else {
+                    Toolkit.getDefaultToolkit().beep(); // Small feedback for invalid input
+                }
+            }
+        });
+
+        // Focus Listener to show warning if needed
+        field.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                String input = field.getText().trim();
+                if (!input.matches(hardRegex)) {
+                    JOptionPane.showMessageDialog(null, warningMsg, "Warning", JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        });
+
+    }
+
+
+
+    //helper function:
     //1. help in rounding up text field, quite literally
     private void makeRoundedTextField(JComponent textField, int width, int height, int arc) {
         textField.setPreferredSize(new Dimension(width, height));
@@ -268,7 +733,416 @@ public abstract class UI extends JFrame{
     }
 
 
+//    private void makeRoundedTextField2(JComponent textField, int width, int height, int arc) {
+//        textField.setPreferredSize(new Dimension(width, height));
+//        textField.setOpaque(false); // Disable default opaque behavior to allow custom painting
+//        textField.setFocusable(true);
+//
+//        // Custom painting to achieve the desired rounded opaque look
+//        textField.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10)); // Padding
+//        textField.setForeground(Color.BLACK); // Ensure text is black
+//
+//        textField.setBackground(new Color(255, 255, 255, 200)); // Semi-transparent white background
+//
+//        textField.setBorder(BorderFactory.createCompoundBorder(
+//                BorderFactory.createEmptyBorder(),
+//                BorderFactory.createEmptyBorder(5, 10, 5, 10) // Padding
+//        ));
+//
+//        // Add a custom paint effect to draw the rounded background
+//        textField.setUI(new javax.swing.plaf.basic.BasicTextFieldUI() {
+//            @Override
+//            protected void paintBackground(Graphics g) {
+//                Graphics2D g2 = (Graphics2D) g.create();
+//                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+//
+//                // Draw the rounded, opaque white background
+//                g2.setColor(textField.getBackground());
+//                g2.fillRoundRect(0, 0, textField.getWidth(), textField.getHeight(), arc, arc);
+//
+//                // Draw the dark gray border
+//                g2.setColor(Color.DARK_GRAY);
+//                g2.drawRoundRect(0, 0, textField.getWidth() - 1, textField.getHeight() - 1, arc, arc);
+//
+//                g2.dispose();
+//            }
+//        });
+//    }
+    private void makeRectangleTextField(JComponent textField, int width, int height, int arc) {
+    textField.setPreferredSize(new Dimension(width, height));
+    textField.setOpaque(false); // Allows custom painting
+    textField.setForeground(Color.BLACK); // Black text
+
+    // Remove default border and add padding
+    textField.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+
+    // Add a custom paint handler using a lightweight approach
+    textField.addPropertyChangeListener("background", e -> textField.repaint());
+
+    textField.setBackground(Color.WHITE); // Solid white background
+
+    textField.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(Color.DARK_GRAY, 2, true), // Rounded border
+            BorderFactory.createEmptyBorder(5, 10, 5, 10) // Inner padding
+    ));
+
+    // Custom painting with a component listener
+    textField.addAncestorListener(new javax.swing.event.AncestorListener() {
+        @Override
+        public void ancestorAdded(javax.swing.event.AncestorEvent event) {
+            textField.repaint();
+        }
+
+        @Override
+        public void ancestorRemoved(javax.swing.event.AncestorEvent event) {}
+
+        @Override
+        public void ancestorMoved(javax.swing.event.AncestorEvent event) {}
+    });
+
+    // Override the paintComponent correctly
+    textField.setOpaque(false);
+    textField.setBackground(Color.WHITE);
+
+    textField.add(new JComponent() {
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            Graphics2D g2 = (Graphics2D) g.create();
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+            // Draw the white rounded rectangle
+            g2.setColor(textField.getBackground());
+            g2.fillRoundRect(0, 0, textField.getWidth(), textField.getHeight(), arc, arc);
+
+            // Draw the dark gray border
+            g2.setColor(Color.DARK_GRAY);
+            g2.drawRoundRect(0, 0, textField.getWidth() - 1, textField.getHeight() - 1, arc, arc);
+
+            g2.dispose();
+        }
+    });
+}
+    private void makTextFieldInvisible(JComponent textField, int width, int height, int arc) {
+        textField.setPreferredSize(new Dimension(width, height));
+        textField.setOpaque(false); // Allows custom painting
+        textField.setForeground(Color.BLACK); // Black text
+        textField.setBackground(Color.WHITE); // Solid white background
+
+        // Proper padding for inner text
+        textField.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+
+        // Custom painting directly on the component
+        textField.add(new JComponent() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+                // Draw the white rounded rectangle
+                g2.setColor(Color.WHITE);
+                g2.fillRoundRect(0, 0, textField.getWidth(), textField.getHeight(), arc, arc);
+
+                // Draw the dark gray border
+                g2.setColor(Color.DARK_GRAY);
+                g2.drawRoundRect(0, 0, textField.getWidth() - 1, textField.getHeight() - 1, arc, arc);
+
+                g2.dispose();
+            }
+        });
+
+        // Trigger repaint when component is rendered
+        textField.addAncestorListener(new javax.swing.event.AncestorListener() {
+            @Override
+            public void ancestorAdded(javax.swing.event.AncestorEvent event) {
+                textField.repaint();
+            }
+
+            @Override
+            public void ancestorRemoved(javax.swing.event.AncestorEvent event) {}
+
+            @Override
+            public void ancestorMoved(javax.swing.event.AncestorEvent event) {}
+        });
+    }
+
+//    public void makeRoundedTextField(JComponent textField, int width, int height, int arc) {
+//        textField.setPreferredSize(new Dimension(width, height));
+//        textField.setOpaque(false); // Avoid default opaque behavior
+//
+//        // Apply a rounded border with padding
+//        textField.setBorder(BorderFactory.createCompoundBorder(
+//                new RoundedBorder(arc, Color.DARK_GRAY),
+//                BorderFactory.createEmptyBorder(5, 10, 5, 10) // Padding
+//        ));
+//
+//        // Custom painting for the background fill
+//        textField.setBackground(new Color(255, 255, 255, 200)); // Semi-transparent white
+//        textField.setForeground(Color.BLACK);
+//
+//        textField.setFocusable(true);
+//
+//        // Add a custom painting override
+//        textField.setUI(new javax.swing.plaf.basic.BasicTextFieldUI() {
+//            @Override
+//            protected void paintSafely(Graphics g) {
+//                Graphics2D g2 = (Graphics2D) g.create();
+//                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+//
+//                // Draw the rounded background
+//                g2.setColor(textField.getBackground());
+//                g2.fillRoundRect(0, 0, textField.getWidth(), textField.getHeight(), arc, arc);
+//
+//                super.paintSafely(g);
+//                g2.dispose();
+//            }
+//        });
+//    }
+
+    private void makeRoundedCalenderField(JDateChooser dateChooser, int width, int height, int arc) {
+        dateChooser.setPreferredSize(new Dimension(width, height));
+        dateChooser.setOpaque(false); // Ensure it's interactive
+        dateChooser.setBackground(Color.WHITE);
+
+        // Apply the fixed rounded border
+        dateChooser.setBorder(BorderFactory.createCompoundBorder(
+                new RoundedBorder(arc,Color.DARK_GRAY),
+                BorderFactory.createEmptyBorder(5, 10, 5, 10) // Padding
+        ));
+
+        dateChooser.setFocusable(true); // Ensure the field can be focused
+
+
+    }
+    private void makePlainTextField(JComponent textField, int width, int height) {
+        textField.setPreferredSize(new Dimension(width, height));
+        textField.setOpaque(true); // Make the component non-transparent
+        textField.setForeground(Color.BLACK); // Black text
+        textField.setBackground(Color.WHITE); // White background
+        textField.setBorder(BorderFactory.createLineBorder(Color.GRAY)); // Simple border
+    }
+    private void makeRoundedTextFieldWithOpacity(JComponent textField, int arc, float opacity) {
+        // Set a rounded border
+        textField.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(Color.DARK_GRAY, 1, true), // Rounded border
+                BorderFactory.createEmptyBorder(5, 10, 5, 10) // Inner padding
+        ));
+
+        textField.setOpaque(false); // Allow transparency
+        textField.setBackground(new Color(255, 255, 255, (int) (opacity * 255))); // White with opacity
+        textField.setForeground(Color.BLACK); // Black text
+    }
+
+
+    //    private void makeFullyTransparentRadioButton1(JRadioButton radioButton) {
+//        //old makeRoundedRadioButton(JRadioButton radioButton, int width, int height, int arc) {
+////        radioButton.setPreferredSize(new Dimension(width, height));
+//        radioButton.setOpaque(false); // Remove background
+//        radioButton.setContentAreaFilled(false); // Remove button area fill
+//        radioButton.setBorderPainted(false); // No borders
+//        radioButton.setFocusPainted(false); // Remove focus ring
+////        radioButton.setBackground(new Color(0, 0, 0, 0));
+////        radioButton.setIcon(createTransparentIcon());
+////        radioButton.setSelectedIcon(createSelectedTransparentIcon());
+//        // Apply custom UI to remove background rendering
+////        radioButton.setBorder(new RoundedBorder(arc, Color.BLACK));
+//    }
+//    private void makeTransparentRadioButton1(JRadioButton radioButton) {
+//        radioButton.setOpaque(false);
+//        radioButton.setContentAreaFilled(false);
+//        radioButton.setBorderPainted(false);
+//        radioButton.setForeground(Color.BLACK); // Keep text visible
+//
+//        // Custom UI to remove the white background inside the button
+//        radioButton.setUI(new BasicRadioButtonUI() {
+//            @Override
+//            public void paint(Graphics g, JComponent c) {
+//                Graphics2D g2 = (Graphics2D) g.create();
+//                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+//
+//                // Draw the default radio button without the white box
+//                super.paint(g2, c);
+//                g2.dispose();
+//            }
+//        });
+//    }
+//    private void makeTransparentRadioButton(JRadioButton radioButton) {
+//        radioButton.setOpaque(false);
+//        radioButton.setContentAreaFilled(false);
+//        radioButton.setBorderPainted(false);
+//        radioButton.setUI(new CustomRadioButtonUI()); // Apply the custom UI
+//    }
+    // 🔍 Helper function to style radio buttons with a rounded border
+    private void styleRoundedRadioButton2(JRadioButton radioButton, int radius, Color borderColor) {
+        radioButton.setOpaque(false);
+        radioButton.setContentAreaFilled(false);
+        radioButton.setFocusPainted(false);
+        radioButton.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+
+        // Add a custom border with rounded corners
+        radioButton.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(borderColor, 1, true), // Rounded line border
+                BorderFactory.createEmptyBorder(5, 5, 5, 5) // Padding
+        ));
+    }
+    private void styleCustomRadioButton(JRadioButton radioButton) {
+        radioButton.setOpaque(false);
+        radioButton.setFocusPainted(false);
+        radioButton.setContentAreaFilled(false);
+        radioButton.setBorderPainted(false);
+
+        // Set custom icons for default and selected states
+        radioButton.setIcon(createRadioIcon(false));
+        radioButton.setSelectedIcon(createRadioIcon(true));
+    }
+    // 🎨 Custom Icon for Rounded Radio Button
+    private Icon createRadioIcon(boolean selected) {
+        int size = 15;
+        return new Icon() {
+            @Override
+            public void paintIcon(Component c, Graphics g, int x, int y) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                // Draw the outer circle (white ring if selected, dark gray otherwise)
+                if (selected) {
+                    g2.setColor(Color.WHITE);
+                } else {
+                    g2.setColor(Color.DARK_GRAY);
+                }
+                g2.fillOval(x, y, size, size);
+
+                // Draw the inner circle for selection (grey fill if selected, light gray otherwise)
+                if (selected) {
+                    g2.setColor(Color.DARK_GRAY); // New grey fill when selected
+                    g2.fillOval(x + 4, y + 4, size - 8, size - 8);
+                } else {
+                    g2.setColor(Color.LIGHT_GRAY); // Default fill color
+                    g2.fillOval(x + 2, y + 2, size - 4, size - 4);
+                }
+                g2.dispose();
+            }
+//                // Draw the outer circle
+//                g2.setColor(Color.DARK_GRAY);
+//                g2.fillOval(x, y, size, size);
+//
+//                // Draw the inner circle for selection
+//                if (selected) {
+//                    g2.setColor(Color.BLACK); // Selection color
+//                    g2.fillOval(x + 4, y + 4, size - 8, size - 8);
+//                } else {
+//                    g2.setColor(Color.LIGHT_GRAY); // Default fill color
+//                    g2.fillOval(x + 2, y + 2, size - 4, size - 4);
+//                }
+//                g2.dispose();
+//            }
+
+            @Override
+            public int getIconWidth() {
+                return size;
+            }
+
+            @Override
+            public int getIconHeight() {
+                return size;
+            }
+        };
+    }
+
+
+//
+//        // Apply the rounded border
+//        radioButton.setBorder(BorderFactory.createCompoundBorder(
+//                new RoundedBorder(20, Color.DARK_GRAY), // Custom border
+//                BorderFactory.createEmptyBorder(0, 0, 0, 0) // Padding
+//        ));
+//    }
+
+    // Create a transparent default (unselected) icon
+//    private Icon createTransparentIcon() {
+//        return new Icon() {
+//            @Override
+//            public void paintIcon(Component c, Graphics g, int x, int y) {
+//                // Do nothing = transparent icon
+//            }
+//
+//            @Override
+//            public int getIconWidth() {
+//                return 16; // Standard size
+//            }
+//
+//            @Override
+//            public int getIconHeight() {
+//                return 16;
+//            }
+//        };
+//    }
+//
+//    // Create a transparent selected icon with a custom black dot
+//    private Icon createSelectedTransparentIcon() {
+//        return new Icon() {
+//            @Override
+//            public void paintIcon(Component c, Graphics g, int x, int y) {
+//                Graphics2D g2 = (Graphics2D) g;
+//                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+//
+//                // Draw a black circle
+//                g2.setColor(Color.BLACK);
+//                g2.fillOval(x + 3, y + 3, 10, 10);
+//
+//                // Draw a transparent outline
+//                g2.setColor(Color.BLACK);
+//                g2.drawOval(x + 2, y + 2, 12, 12);
+//            }
+//
+//            @Override
+//            public int getIconWidth() {
+//                return 16; // Standard size
+//            }
+//
+//            @Override
+//            public int getIconHeight() {
+//                return 16;
+//            }
+//        };
+//    }
+
+    //no clue tf this bitch is doing here
+    //ohk got it use this place (below here) like a buffer to store page
+    //related functions/ methods here
     public abstract void actionPerformed(ActionEvent b);
+}
+
+class CustomRadioButtonUI extends BasicRadioButtonUI {
+    @Override
+    public void paint(Graphics g, JComponent c) {
+        Graphics2D g2 = (Graphics2D) g.create();
+        AbstractButton button = (AbstractButton) c;
+
+        // Enable anti-aliasing for smooth drawing
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+        // Get the size of the button
+        int diameter = 16; // Size of the round button
+        int x = 2;
+        int y = (c.getHeight() - diameter) / 2;
+
+        // Draw transparent background
+        g2.setColor(new Color(0, 0, 0, 0)); // Fully transparent
+        g2.fillRect(0, 0, c.getWidth(), c.getHeight());
+
+        // Draw the outer circle (unselected state)
+        g2.setColor(Color.BLACK);
+        g2.drawOval(x, y, diameter, diameter);
+
+        // Draw the selected dot if the button is selected
+        if (button.isSelected()) {
+            g2.setColor(Color.BLACK);
+            g2.fillOval(x + 4, y + 4, diameter - 8, diameter - 8);
+        }
+
+        g2.dispose();
+    }
 }
 
 

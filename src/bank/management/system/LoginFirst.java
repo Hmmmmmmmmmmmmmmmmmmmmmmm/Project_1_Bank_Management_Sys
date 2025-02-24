@@ -575,11 +575,12 @@ public class LoginFirst extends JFrame implements ActionListener {
 
     }
 }
-class RoundedBorder implements Border {
+class RoundedBorder1 implements Border {
     private final int radius;
     private final Color color;
 
-    public RoundedBorder(int radius, Color color) {
+
+    RoundedBorder1(int radius, Color color) {
         this.radius = radius;
         this.color = color;
     }
@@ -592,7 +593,7 @@ class RoundedBorder implements Border {
 
     @Override
     public boolean isBorderOpaque() {
-        return false; // Ensure proper painting of the field
+        return false;
     }
 
     @Override
