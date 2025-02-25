@@ -1,0 +1,48 @@
+"^(\\d{0,12}$)|(^(\\d{4})\\s?-?\\d{4}\\s?-?\\d{4}$)|(^[6-9]{1}\\d{3}\\s?-?\\d{4}\\s?-?\\d{4}$)"
+for a 12 max digit with some constraints
+used previously on the basic
+^[34569]{1}//d{0,15}$
+
+more to be added in signUp:
+try {
+            String formNo = first;
+            String name = userName.getText();
+            String fatherName = fathersName.getText();
+            String dob = ((JTextField) dateChooser.getDateEditor().getUiComponent()).getText();
+            String gen = null;
+            if(gender1.isSelected()){
+                gen = "Male";
+            }else if(gender2.isSelected()){
+                gen = "Female";
+            }
+            String email = emailAddress.getText();
+            String marr = null;
+            if(married.isSelected()){
+                marr = "Married";
+            } else if(keepDreamingBro.isSelected()){
+                marr = "Unmarried";
+            }else if(noClueBoutThisOne.isSelected()){
+                marr = "Others";
+            }
+            String address = addressText.getText();
+            String city = City.getText();
+            String pinCode = PinCode.getText();
+            String state = State.getText();
+
+            try{
+                if(userName.getText().equals("")){
+                    JOptionPane.showMessageDialog(null,"Fill all the fields");
+                }else{
+                    ConnectionTrial con1 = new ConnectionTrial();
+                    String q = "insert into signUp values ('"+formNo+"','"+name+"','"+fatherName+"','"+dob+"','"+gen+"','"+email+"','"+marr+"','"+address+"','"+city+"','"+pinCode+"','"+state+"')";
+                    con1.statement.executeUpdate(q);
+                    new SignUp2();
+                    setVisible(false);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
