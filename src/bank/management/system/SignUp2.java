@@ -101,20 +101,20 @@ public class SignUp2 extends UI2 implements ActionListener{
                 ExistingAcc = "No";
             }
 
-//            try{
-//                //change this for a check for every input field
-//                if(PAN.getText().isEmpty()){
-//                    JOptionPane.showMessageDialog(null,"Fill all the fields");
-//                }else{
-//                    ConnectionTrial con1 = new ConnectionTrial();
-//                    String q = "insert into signUp2 values ('"+formNo+"','"++"','"+fatherName+"','"+dob+"','"+gen+"','"+email+"','"+marr+"','"+address+"','"+city+"','"+pinCode+"','"+state+"')";
-//                    con1.statement.executeUpdate(q);
-//                    new SignUp2(formNo);
-//                    setVisible(false);
-//                }
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
+            try{
+                //change this for a check for every input field
+                if(PAN.getText().isEmpty()){
+                    JOptionPane.showMessageDialog(null,"Fill all the fields");
+                }else{
+                    ConnectionTrial con1 = new ConnectionTrial();
+                    String q = "insert into signUp2 values ('"+formNo+"','"+Category+"','"+Income+"','"+Education+"','"+Occupation+"','"+PANNumber+"','"+AadhaarNumber+"','"+ExistingAcc+"')";
+                    con1.statement.executeUpdate(q);
+                    new SignUp3(formNo);
+                    setVisible(false);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
