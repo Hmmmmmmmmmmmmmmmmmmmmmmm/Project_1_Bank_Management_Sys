@@ -22,25 +22,37 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.security.PublicKey;
+
 public class UI2 extends JFrame {
 
     private int width, height;
 
     //constructor for all basic details required per page
-    public UI2(int width, int height, String title) {
+    public UI2(){
+        System.out.println("UI2 class called");
+        setUndecorated(true);
+    }
+    public UI2(int width, int height, String title, boolean center) {
         this.width = width;
         this.height = height;
 
         setSize(width, height);
         setTitle(title);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setUndecorated(true);
         setLayout(null);
 
         // Centering the pop-up dynamically
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        int centerX = (screenSize.width - width) / 2;
-        int centerY = (screenSize.height - height) / 2;
-        setLocation(centerX, centerY);
+        if(center){
+            Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+            int centerX = (screenSize.width - width) / 2;
+            int centerY = (screenSize.height - height) / 2;
+            setLocation(centerX, centerY);
+        }else{
+            setLocation(0,0);
+        }
+
     }
     //this function is used in SignUPNEW an additional playground not in the main code
     protected JTextField addLabelWithTextField2(String text, String fontName, int fontStyle, int fontSize,
@@ -637,17 +649,17 @@ public class UI2 extends JFrame {
                 }
             }
         });
-
+//uncomment below for msg annoyance!!!!
         // Focus Listener to show warning if needed
-        field.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusLost(FocusEvent e) {
-                String input = field.getText().trim();
-                if (!input.matches(hardRegex)) {
-                    JOptionPane.showMessageDialog(null, warningMsg, "Warning", JOptionPane.WARNING_MESSAGE);
-                }
-            }
-        });
+//        field.addFocusListener(new FocusAdapter() {
+//            @Override
+//            public void focusLost(FocusEvent e) {
+//                String input = field.getText().trim();
+//                if (!input.matches(hardRegex)) {
+//                    JOptionPane.showMessageDialog(null, warningMsg, "Warning", JOptionPane.WARNING_MESSAGE);
+//                }
+//            }
+//        });
 
     }
     protected void applyInputFilter(JPasswordField field, String regexField, String warningMsg, String hardRegex) {
@@ -1866,6 +1878,43 @@ public class UI2 extends JFrame {
         add(label);
     }
 
+    protected JLabel addLabelWhichReturns(String text, String fontName, int fontStyle, int fontSize,
+                            int x, int y, boolean center, boolean colorChange,
+                            int labelTextR, int labelTextG, int labelTextB, boolean ShouldIAddIt) {
+        JLabel label = new JLabel(text); // Create the label
+        label.setFont(new Font(fontName, fontStyle, fontSize)); // Set label font
+        label.putClientProperty(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+
+        // Get preferred size
+        Dimension size = label.getPreferredSize();
+
+        // Add subtle padding dynamically (2-5px based on text length)
+        int padding = Math.min(5, size.width / 20); // Scale padding based on text size
+
+        // Apply an empty border for subtle spacing
+        label.setBorder(BorderFactory.createEmptyBorder(0, padding, 0, padding));
+
+        // Adjust size with padding
+        label.setSize(size.width + padding * 2, size.height);
+
+        // If centering is required (assuming 'width' is the container width)
+        if (center) {
+            x = (width - label.getWidth()) / 2;
+        }
+
+        // Set label color if requested using numeric RGB values
+        if (colorChange) {
+            label.setForeground(new Color(labelTextR, labelTextG, labelTextB));
+        }
+
+        // Set final position (extra 5 pixels added as in your original code)
+        label.setBounds(x, y, label.getWidth() + 10, label.getHeight());
+        if(ShouldIAddIt){
+            add(label);
+        }
+        return label;
+    }
+
 
 
 
@@ -1981,6 +2030,29 @@ public class UI2 extends JFrame {
             textField.setBackground(bgColor);
         }
 
+        // Apply a compound border: a rounded border with inner padding.
+        textField.setBorder(BorderFactory.createCompoundBorder(
+                new RoundedBorder(arc, borderColor),
+                BorderFactory.createEmptyBorder(5, 10, 5, 10)
+        ));
+
+        textField.repaint();
+    }
+    private void makeRoundedTextField2(JComponent textField, int width, int height, int arc,
+                                      boolean transparent, int opacityLevel,
+                                       Color bgColor, Color borderColor,
+                                       boolean reallyRound) {
+        textField.setPreferredSize(new Dimension(width, height));
+        textField.setFocusable(true);
+
+        if (transparent) {
+            textField.setOpaque(false);
+            // Set background with desired opacity (ensure opacityLevel is between 0 and 255)
+            textField.setBackground(new Color(bgColor.getRed(), bgColor.getGreen(), bgColor.getBlue(), Math.min(opacityLevel, 255)));
+        } else {
+            textField.setOpaque(true);
+            textField.setBackground(bgColor);
+        }
         // Apply a compound border: a rounded border with inner padding.
         textField.setBorder(BorderFactory.createCompoundBorder(
                 new RoundedBorder(arc, borderColor),
@@ -2352,6 +2424,37 @@ public class UI2 extends JFrame {
         return comboBox;
     }
 
+    //just the text field no label:
+
+    protected JTextField justTextField(
+            // Text field parameters:
+            int x, int y, int textFieldWidth, int textFieldHeight,
+            String textFieldFontName, int textFieldFontStyle, int textFieldFontSize,
+            // Text field color (numeric RGB):
+            int textFieldColorR, int textFieldColorG, int textFieldColorB,
+            // Border color (numeric RGB):
+            int borderR, int borderG, int borderB,
+            // Background color for text field (numeric RGB):
+            int bgR, int bgG, int bgB,int arc,
+            // Transparency settings:
+            boolean transparent, int opacityLevel
+    ) {
+
+        // Create text field
+        JTextField textField = new JTextField();
+        textField.setFont(new Font(textFieldFontName, textFieldFontStyle, textFieldFontSize));
+        textField.setBounds(x, y, textFieldWidth, textFieldHeight);
+
+        // Apply our custom rounded text field styling
+        makeRoundedTextField(textField, textFieldWidth, textFieldHeight, arc, transparent, opacityLevel,
+                new Color(bgR, bgG, bgB), new Color(borderR, borderG, borderB));
+
+        textField.setForeground(new Color(textFieldColorR, textFieldColorG, textFieldColorB));
+
+        add(textField);
+        return textField;
+    }
+
     //helper
     private void makeRoundedCalenderField(JDateChooser dateChooser, int width, int height, int arc,
                                           boolean transparent, int opacityLevel, Color fillColor, Color borderColor) {
@@ -2377,6 +2480,279 @@ public class UI2 extends JFrame {
 
         dateChooser.repaint();
     }
+
+    protected void applyInputFilter(
+            JTextComponent field,
+            String regexField,
+            String warningMsg,
+            String hardRegex,
+            Color errorBorderColor,
+            int borderThickness,
+            boolean validateOnFocusLost
+    ) {
+        Border defaultBorder = field.getBorder(); // Store the default border
+
+        // Real-time input filter
+        ((AbstractDocument) field.getDocument()).setDocumentFilter(new DocumentFilter() {
+            @Override
+            public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+                String newText = fb.getDocument().getText(0, fb.getDocument().getLength()) + text;
+                if (newText.matches(regexField) || newText.isEmpty()) {
+                    super.replace(fb, offset, length, text, attrs);
+                    field.setBorder(defaultBorder); // Keep the default border
+                } else {
+                    Toolkit.getDefaultToolkit().beep(); // Feedback for invalid input
+                    // Overlay an error border without losing the original
+                    field.setBorder(BorderFactory.createCompoundBorder(
+                            BorderFactory.createLineBorder(errorBorderColor, borderThickness),
+                            defaultBorder
+                    ));
+                }
+            }
+        });
+
+        // Optional Focus Listener for validation on focus lost
+        if (validateOnFocusLost) {
+            field.addFocusListener(new FocusAdapter() {
+                @Override
+                public void focusLost(FocusEvent e) {
+                    String input = field.getText().trim();
+                    if (!input.matches(hardRegex)) {
+                        field.setBorder(BorderFactory.createCompoundBorder(
+                                BorderFactory.createLineBorder(errorBorderColor, borderThickness),
+                                defaultBorder
+                        ));
+                        JOptionPane.showMessageDialog(null, warningMsg, "Validation Error", JOptionPane.WARNING_MESSAGE);
+                    } else {
+                        field.setBorder(defaultBorder);
+                    }
+                }
+            });
+        }
+    }
+    protected void applyInputValidation2(
+            JTextComponent field,
+            String warningMsg,
+            String msgTitle,
+            int msgType,
+            boolean playBeep,
+            String hardRegex,
+            Color errorBorderColor,
+            int borderThickness
+    ) {
+        Border defaultBorder = field.getBorder(); // Store the default border
+
+        // Method to validate input on demand (e.g., button click)
+        String input = field.getText().trim();
+        if (!input.matches(hardRegex)) {
+            // Set error border
+            field.setBorder(BorderFactory.createCompoundBorder(
+                    BorderFactory.createLineBorder(errorBorderColor, borderThickness),
+                    defaultBorder
+            ));
+
+            // Optional beep sound
+            if (playBeep) {
+                Toolkit.getDefaultToolkit().beep();
+            }
+
+            // Show customizable warning message
+            JOptionPane.showMessageDialog(null, warningMsg, msgTitle, msgType);
+        } else {
+            // Reset to the default border if input is valid
+            field.setBorder(defaultBorder);
+        }
+    }
+    protected boolean applyInputValidation(
+            JTextComponent field,
+            String warningMsg,
+            String msgTitle,
+            int msgType,
+            boolean playBeep,
+            String hardRegex,
+            Color errorBorderColor,
+            int borderThickness
+    ) {
+        Border defaultBorder = field.getBorder(); // Store the default border
+
+        // Method to validate input on demand (e.g., button click)
+        String input = field.getText().trim();
+        if (!input.matches(hardRegex)) {
+            // Set error border
+            field.setBorder(BorderFactory.createCompoundBorder(
+                    BorderFactory.createLineBorder(errorBorderColor, borderThickness),
+                    defaultBorder
+            ));
+
+            // Optional beep sound
+            if (playBeep) {
+                Toolkit.getDefaultToolkit().beep();
+            }
+
+            // Show customizable warning message
+            JOptionPane.showMessageDialog(null, warningMsg, msgTitle, msgType);
+
+            return false; // Validation failed
+        } else {
+            // Reset to the default border if input is valid
+            field.setBorder(defaultBorder);
+            return true; // Validation passed
+        }
+    }
+
+    protected boolean applyInputValidation(
+            JTextComponent field,
+            String warningMsg,
+            String msgTitle,
+            int msgType,
+            boolean playBeep,
+            String hardRegex,
+            String iconPath, // Icon path parameter
+            int iconXOffset, // X-offset relative to the text field
+            int iconYOffset, // Y-offset relative to the text field
+            int iconWidth, // Icon width
+            int iconHeight // Icon height
+    ) {
+        String input = field.getText().trim();
+
+
+
+        // Generate a unique name for the error icon label
+        String iconLabelName = field.getName() + "_errorIcon";
+
+        // Remove existing error icon (if any)
+        Component existingIcon = findComponentByName(iconLabelName);
+        if (existingIcon != null) {
+            remove(existingIcon);
+        }
+
+        if (!input.matches(hardRegex)) {
+            System.out.println("Icon Path: " + iconPath);
+            System.out.println("Icon Exists: " + (existingIcon != null));
+            System.out.println("Field Name: " + field.getName());
+
+            // Optional beep sound
+            if (playBeep) {
+                Toolkit.getDefaultToolkit().beep();
+            }
+
+            // Show customizable warning message
+            JOptionPane.showMessageDialog(null, warningMsg, msgTitle, msgType);
+
+            // Add the error icon using the addImage method
+            int x = field.getX() + field.getWidth() + iconXOffset;
+            int y = field.getY() + iconYOffset;
+
+            ImageIcon icon = new ImageIcon(iconPath);
+            JLabel iconLabel = new JLabel(icon);
+            iconLabel.setName(iconLabelName); // Name the icon for easy access later
+            iconLabel.setBounds(x, y, iconWidth, iconHeight);
+            add(iconLabel);
+            revalidate();
+            repaint();
+
+
+            return false; // Input is invalid
+        }
+
+        return true; // Input is valid
+    }
+
+
+    //helpers here:
+    // Method to find a component by its unique name (e.g., error icon labels)
+    private Component findComponentByName(String name) {
+        for (Component comp : getContentPane().getComponents()) {
+            if (name.equals(comp.getName())) {
+                return comp;
+            }
+        }
+        return null;
+    }
+
+    protected void removeErrorIcon(JTextComponent field) {
+        String iconLabelName = field.getName() + "_errorIcon";
+        Component existingIcon = findComponentByName(iconLabelName);
+        System.out.println("i am removeErrorIcon");
+    //    System.out.println("Icon Path: " + iconPath);
+        System.out.println("Icon Exists: " + (existingIcon != null));
+        System.out.println("Field Name: " + field.getName());
+        if (existingIcon != null) {
+            remove(existingIcon);
+            repaint(); // Ensure the UI is updated
+        }
+    }
+
+    //reChecker
+    protected boolean applyInputValidation(
+            JTextComponent field,
+            JLabel errorIcon,      // Pass the error icon as a parameter
+            String warningMsg,
+            String msgTitle,
+            int msgType,
+            boolean playBeep,
+            String hardRegex,
+            boolean isClearAction,
+            int iconXOffset, // Dynamic X-offset relative to the text field
+            int iconYOffset, // Dynamic Y-offset relative to the text field
+            int iconWidth,   // Icon width
+            int iconHeight   // Icon height
+    ) {
+        String input = field.getText().trim();
+
+        // If this is a 'Clear' action, just hide the icon and return true
+        if (isClearAction) {
+//            errorIcon.setVisible(false);
+            revalidate();
+            repaint();
+            return true;
+        }
+
+        // Validate input
+        if (!input.matches(hardRegex)) {
+            // Optional beep sound
+            if (playBeep) {
+                Toolkit.getDefaultToolkit().beep();
+            }
+
+            // Show customizable warning message
+            JOptionPane.showMessageDialog(null, warningMsg, msgTitle, msgType);
+
+//            // Set the icon position dynamically relative to the text field
+//            int x = field.getX() + field.getWidth() + iconXOffset;
+//            int y = field.getY() + iconYOffset;
+//
+//            errorIcon.setBounds(x, y, iconWidth, iconHeight);
+//            errorIcon.setVisible(true);
+//
+//            revalidate();
+//            repaint();
+            return false; // Input is invalid
+        }
+
+        // Input is valid, hide the error icon
+//        errorIcon.setVisible(false);
+        revalidate();
+        repaint();
+        return true;
+    }
+
+
+
+//    protected void removeErrorIcon(JTextComponent field) {
+//        String iconLabelName = field.getName() + "_errorIcon";
+//        Component existingIcon = findComponentByName(iconLabelName);
+//        System.out.println("i am removeErrorIcon");
+//        if (existingIcon != null) {
+//            remove(existingIcon);
+//        }
+//    }
+
+
+
+
+
+
 
 
 

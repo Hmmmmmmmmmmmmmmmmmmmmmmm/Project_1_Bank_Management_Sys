@@ -3,6 +3,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.util.Arrays;
 
 public class LoginPage extends UI2 implements ActionListener {
     //setting 4:3 ratio:
@@ -18,9 +20,12 @@ public class LoginPage extends UI2 implements ActionListener {
     private JButton signInButton, clearButton, signUpButton;
     private ImageIcon logo;
 
+    //error icon bullshit lets hope it works:
+    private JLabel errorIcon;
+
     //Login page main???
     public LoginPage() {
-        super(640, 480, "Asteroid Destroyer");
+        super(640, 480, "Asteroid Destroyer",true);
 
         // Create an ImageIcon with your logo (adjust the path to the image file)
         logo = new ImageIcon("C:\\xtra\\Last_Chance\\BMS\\src\\icons\\allgood.jpg");
@@ -66,8 +71,30 @@ public class LoginPage extends UI2 implements ActionListener {
 
         //regex
         // Apply real-time validation
+        //old validation constant popups
         applyInputFilter(cardNumberField, "^\\d{0,16}$", "The Card number must start with (9 or 6)\nand contain a 16 digits!", "^[69]\\d{0,15}$"); // 12-14 digits
         applyInputFilter(pinField, "^\\d{0,4}$", "The PIN is incomplete! \nIt should have 4 digits!", "^\\d{0,4}$"); // 4 digits
+        //new:
+//        applyInputFilter(
+//                cardNumberField,
+//                "^\\d{0,16}$",
+//                "The Card number must start with (9 or 6) and contain 16 digits!",
+//                "^[69]\\d{15}$",
+//                Color.RED,
+//                2,
+//                true
+//        );
+//
+//        applyInputFilter(
+//                pinField,
+//                "^\\d{0,4}$",
+//                "The PIN is incomplete! It should have 4 digits!",
+//                "^\\d{4}$",
+//                Color.RED,
+//                2,
+//                true
+//        );
+        //we say fk this we do it the hard way in the action listener
 
         //butttttoooonnnnsssss
         signInButton = addRoundedButton(
@@ -116,6 +143,14 @@ public class LoginPage extends UI2 implements ActionListener {
         int topToWindow = (screenHeight - 480) / 2; // (screenHeight - windowHeight) / 2
         setLocation(sideToWindowSize, topToWindow);
 
+        //temp pos t1: above bg
+        // Initialize the shared error icon
+
+//        ImageIcon icon = new ImageIcon("C:\\xtra\\Last_Chance\\BMS\\src\\icons\\warning.png");
+//        errorIcon = new JLabel(icon);
+//        errorIcon.setVisible(false); // Initially hidden
+//        add(errorIcon);
+
         //putting the bg at last:
         ImageIcon backgroundImage = new ImageIcon("C:\\xtra\\Last_Chance\\BMS\\src\\icons\\layer-170971.jpg"); // Replace with actual path
         addImage(backgroundImage, 0, 0, widthWindow, heightWindow);
@@ -123,27 +158,84 @@ public class LoginPage extends UI2 implements ActionListener {
         setVisible(true);
     }
 
-    private boolean isClearing = false;
-
+    //add the error/warning icon
+    //after the project is done!!
     @Override
     public void actionPerformed(ActionEvent b) {
         try {
             if (b.getSource() == signInButton) {
-                System.out.println("Sign-in Clicked");
-            } else if (b.getSource() == clearButton) {
-                cardNumberField.setText("");
-                pinField.setText("");
-            } else if (b.getSource() == signUpButton) {
+                // Validate card number
+                boolean isCardNumberValid = applyInputValidation(
+                        cardNumberField,
+                        errorIcon, // Pass the error icon here
+                        "Invalid card number!",
+                        "Validation Error",
+                        JOptionPane.WARNING_MESSAGE,
+                        true,
+                        "\\d{16}", // Regex for 12-14 digits
+                        false, // Not a clear action
+                        5, 0, // Icon X and Y offset
+                        20, 20 // Icon dimensions
+                );
+
+                boolean isPinValid = applyInputValidation(
+                        pinField,
+                        errorIcon, // Pass the error icon here
+                        "Invalid PIN!",
+                        "Validation Error",
+                        JOptionPane.WARNING_MESSAGE,
+                        true,
+                        "\\d{4}", // Regex for 4 digits
+                        false,
+                        5, 0,
+                        20, 20
+                );
+
+                if (isCardNumberValid && isPinValid) {
+                    System.out.println("All inputs are valid. Proceeding with login...");
+                }
+
+
+                // Proceed only if all inputs are valid
+                if (isCardNumberValid  && isPinValid) {
+                    if (b.getSource() == signInButton) {
+                        //System.out.println("Sign-in Clicked");
+                        ConnectionTrial con1 = new ConnectionTrial();
+                        String cardNum = cardNumberField.getText();
+                        String pinPassword = pinField.getText();
+                        System.out.println(pinPassword);
+                        String query = "select * from Login where REPLACE(Card_Number, '-', '') = '"+cardNum+"' and PiN = '"+pinPassword+"'";
+                        ResultSet resultSet = con1.statement.executeQuery(query);
+                        if(resultSet.next()){
+                            setVisible(false);
+                            new TransactionMain(pinPassword);
+                        }else{
+                            System.out.println("huh");
+                            JOptionPane.showMessageDialog(null,"Bro u trippin aka\nIncorrect Card Number or Pin");
+                        }
+                    }
+                }
+            }else if (b.getSource() == signUpButton) {
                 new SignUp();
                 setVisible(false);
+            }else if (b.getSource() == clearButton) {
+                //clear up lil bitch
+                cardNumberField.setText("");
+                pinField.setText("");
+                //clearing the error boxes:
+                // Reset to default borders by clearing any overlays
+                removeErrorIcon(cardNumberField);
+                removeErrorIcon(pinField);
+
             }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
 }
+
+//1409963051935469
 //below is old code
 //
 //package bank.management.system;

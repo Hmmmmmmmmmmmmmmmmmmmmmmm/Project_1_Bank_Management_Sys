@@ -13,8 +13,8 @@ public class SignUp extends UI2 implements ActionListener{
     int widthWindow = 850;
     int heightWindow = 800;
     Random rand = new Random();
-    long first4 = (rand.nextLong()%9000L)+1000L;
-    String first = " " + Math.abs(first4);
+    int first4 = rand.nextInt(9000) + 1000; // Generates a number between 1000 and 9999
+    String first = Integer.toString(first4); // Convert to string
     // Global opacity level for all components (0 = fully transparent, 255 = solid)
     // need to implement this bitch
     private final int opacityLevel = 200;
@@ -50,7 +50,7 @@ public class SignUp extends UI2 implements ActionListener{
 //    private JPasswordField pinField;
 
     public SignUp() {
-        super(850, 800, "Sign Up page");
+        super(850, 800, "Sign Up page",true);
 
         //logo = new ImageIcon("C:\\xtra\\Last_Chance\\BMS\\src\\icons\\bank.png");
         logo = new ImageIcon("C:\\xtra\\Last_Chance\\BMS\\src\\icons\\allgood.jpg");

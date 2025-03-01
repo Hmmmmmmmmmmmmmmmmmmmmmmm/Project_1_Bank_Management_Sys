@@ -6,6 +6,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Random;
+
 public class SignUp3 extends UI2 implements ActionListener{
     int widthWindow = 750;
     int heightWindow = 700;
@@ -33,8 +37,8 @@ public class SignUp3 extends UI2 implements ActionListener{
 
 
 
-    public SignUp3(String formNumber) {
-        super(750, 750, "Sign Up page 3");
+    public SignUp3(String formNo) {
+        super(750, 750, "Sign Up page 3",true);
         logo = new ImageIcon("C:\\xtra\\Last_Chance\\BMS\\src\\icons\\allgood.jpg");
         addImage(logo, 25, 25, 100, 100); // Logo at top center
 
@@ -116,7 +120,7 @@ public class SignUp3 extends UI2 implements ActionListener{
                 /* baseTextR, baseTextG, baseTextB */ 50, 50, 50,
                 /* baseBorderR, baseBorderG, baseBorderB */ 50, 50, 50,
                 /* baseBgR, baseBgG, baseBgB */ 200, 200, 200,
-                /* cornerRadius */ 20
+                /* cornerRadius */ 10
         );
 
 
@@ -126,7 +130,7 @@ public class SignUp3 extends UI2 implements ActionListener{
                 50, 50, 50,    // base text color: dark gray
                 50, 50, 50,    // base border color: dark gray
                 200, 200, 200,
-                20// base background color: light grayish
+                10// base background color: light grayish
         );
         Submit.addActionListener((ActionListener) this);
         Cancel.addActionListener((ActionListener) this);
@@ -146,7 +150,76 @@ public class SignUp3 extends UI2 implements ActionListener{
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(ActionEvent b) {
+        try {
+            String AccountType = null;
+            if(savingAccount.isSelected()){
+                AccountType="Saving Account";
+            }else if(fixedDeposit.isSelected()){
+                AccountType="Fixed Deposit Account";
+            }else if(currentAccount.isSelected()){
+                AccountType="Current Account";
+            }else if(recurringDeposit.isSelected()){
+                AccountType="Recurring Deposit Account";
+            }
+            //private shit
+            Random rand = new Random();
+            long first7 = (rand.nextLong()%90000000L)+1409963000000000L;
+            String cardNumber = String.format("%016d", Math.abs(first7));
+            String formattedCardNumber = String.format("%s-%s-%s-%s",
+                    cardNumber.substring(0, 4),
+                    cardNumber.substring(4, 8),
+                    cardNumber.substring(8, 12),
+                    cardNumber.substring(12, 16));
+            int first4 = rand.nextInt(9000) + 1000; // Generates a number between 1000 and 9999
+            String Pin = Integer.toString(first4);
+//            String Pin = "" + Math.abs(first3);
+//
+            //rest things
+            String services = "";
+            if(ATMCard.isSelected()){
+                services += "ATM Card  ";
+            }            if(InternetBanking.isSelected()){
+                services += "Internet Banking  ";
+            }            if(MobileBanking.isSelected()){
+                services += "Mobile Banking  ";
+            }            if(EmailAlerts.isSelected()){
+                services += "Email Alerts  ";
+            }            if(ChequeBook.isSelected()){
+                services += "Cheque Book  ";
+            }           if(EStatement.isSelected()){
+                services += "E-Statement  ";
+            }
+
+            try{
+                if(b.getSource()==Submit){
+                    //change this for a check for every input field
+//                assert AccountType != null;
+                    if(AccountType.equals("")) {
+                        JOptionPane.showMessageDialog(null,"Fill all the fields");
+                    }
+                    else{
+                        ConnectionTrial con1 = new ConnectionTrial();
+                        System.out.println(formNo);
+                        String q1 = "insert into signUp3 values ('"+formNo+"','"+AccountType+"','"+formattedCardNumber+"','"+Pin+"','"+services+"')";
+                        String q2 = "insert into Login values ('"+formNo+"','"+formattedCardNumber+"','"+Pin+"')";
+
+                        con1.statement.executeUpdate(q1);
+                        con1.statement.executeUpdate(q2);
+                        JOptionPane.showMessageDialog(null,"Card Number: " +formattedCardNumber+"\n PIN: "+Pin);
+                        new Deposit(formNo);
+                        setVisible(false);
+                    }
+                } else if (b.getSource()==Cancel) {
+                    System.exit(0);
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 }

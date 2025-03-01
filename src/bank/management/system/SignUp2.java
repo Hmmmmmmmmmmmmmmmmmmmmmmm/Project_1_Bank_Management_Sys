@@ -25,9 +25,9 @@ public class SignUp2 extends UI2 implements ActionListener{
 
     private final int opacityLevel = 200;
 
-    public SignUp2(String formNumber){
+    public SignUp2(String formNo){
         //constructor call for basic calls
-        super(850, 700, "Sign Up page 2");
+        super(850, 700, "Sign Up page 2",true);
 
         logo = new ImageIcon("C:\\xtra\\Last_Chance\\BMS\\src\\icons\\allgood.jpg");
         addImage(logo, 25, 25, 100, 100); // Logo at top center
@@ -82,9 +82,9 @@ public class SignUp2 extends UI2 implements ActionListener{
             setVisible(true);
     }
 
-    public static void main(String[] args) {
-        new SignUp2("");
-    }
+//    public static void main(String[] args) {
+//        new SignUp2("");
+//    }
 //    @Override
     public void actionPerformed(ActionEvent b) {
         try {
@@ -107,7 +107,9 @@ public class SignUp2 extends UI2 implements ActionListener{
                     JOptionPane.showMessageDialog(null,"Fill all the fields");
                 }else{
                     ConnectionTrial con1 = new ConnectionTrial();
+                    System.out.println(formNo);
                     String q = "insert into signUp2 values ('"+formNo+"','"+Category+"','"+Income+"','"+Education+"','"+Occupation+"','"+PANNumber+"','"+AadhaarNumber+"','"+ExistingAcc+"')";
+
                     con1.statement.executeUpdate(q);
                     new SignUp3(formNo);
                     setVisible(false);
