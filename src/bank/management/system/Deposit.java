@@ -26,10 +26,6 @@ public class Deposit extends UI2 implements ActionListener {
 //        super(1550,1080,"ATM");
         //cant use this condition
         this.pin = pin;
-
-
-
-
         addLabel("Enter the Amount you want to deposit", "Times New Roman Bold",
                 Font.PLAIN, 24,
                 440, 170, false, true,
@@ -90,7 +86,8 @@ public class Deposit extends UI2 implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent b) {
         try {
-            String Amount = depositAmount.getText();
+            String Amount1 = depositAmount.getText();
+            String Amount = Amount1 + "   ";
             Date date = new Date();
             try{
                 if(b.getSource()==depositButton){

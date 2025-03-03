@@ -21,7 +21,7 @@ public class CashWithdrawal extends UI2 implements ActionListener {
     CashWithdrawal(String pin){
         super(1550,1080,"Main",false);
         this.pin = pin;
-        addLabel("Pleas Enter Withdrawal Amount", "Times New Roman Bold",
+        addLabel("Please Enter Withdrawal Amount", "Times New Roman Bold",
                 Font.PLAIN, 24,
                 460, 185, false, true,
                 255, 255, 255);
@@ -78,8 +78,11 @@ public class CashWithdrawal extends UI2 implements ActionListener {
             Date date = new Date();
             try {
                 int amt = Integer.parseInt(Amount);
-                if (b.getSource() == withdrawalButton ) {
-                    if (withdrawalAmount.getText().isEmpty()|| amt>20000) {
+                if (b.getSource() == BackButton) {
+                    setVisible(false);
+                    new TransactionMain(pin);
+                }else if (b.getSource() == withdrawalButton ) {
+                    if (withdrawalAmount.getText().isEmpty() || amt>20000) {
                         JOptionPane.showMessageDialog(null,
                                 "Please enter appropriate Withdrawal amount");
                     }else {
@@ -103,10 +106,6 @@ public class CashWithdrawal extends UI2 implements ActionListener {
                         new TransactionMain(pin);
 
                     }
-                } else if (b.getSource() == BackButton) {
-//                    System.exit(0);
-                    setVisible(false);
-                    new TransactionMain(pin);
                 }
 
             } catch (Exception e) {
@@ -117,3 +116,4 @@ public class CashWithdrawal extends UI2 implements ActionListener {
         }
     }
 }
+

@@ -127,6 +127,14 @@ public class TransactionMain extends UI2 implements ActionListener {
 //                setVisible(false);
                 new FastCash(pin);
                 setVisible(false);
+            }else if(e.getSource()==pinChange){
+//                setVisible(false);
+                new ChangePin(pin);
+                setVisible(false);
+            }else if(e.getSource()==miniStatement){
+//                setVisible(false);
+                new MiniStatement(pin);
+//                setVisible(false);
             }else if(e.getSource()==exit){
 //                setVisible(false);
                 System.exit(0);

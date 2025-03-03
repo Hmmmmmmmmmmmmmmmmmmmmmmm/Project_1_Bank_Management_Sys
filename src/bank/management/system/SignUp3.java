@@ -35,8 +35,6 @@ public class SignUp3 extends UI2 implements ActionListener{
     private JButton Submit;
     private JButton Cancel;
 
-
-
     public SignUp3(String formNo) {
         super(750, 750, "Sign Up page 3",true);
         logo = new ImageIcon("C:\\xtra\\Last_Chance\\BMS\\src\\icons\\allgood.jpg");
@@ -207,7 +205,7 @@ public class SignUp3 extends UI2 implements ActionListener{
                         con1.statement.executeUpdate(q1);
                         con1.statement.executeUpdate(q2);
                         JOptionPane.showMessageDialog(null,"Card Number: " +formattedCardNumber+"\n PIN: "+Pin);
-                        new Deposit(formNo);
+                        new Deposit(Pin);
                         setVisible(false);
                     }
                 } else if (b.getSource()==Cancel) {
@@ -220,6 +218,5 @@ public class SignUp3 extends UI2 implements ActionListener{
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 }

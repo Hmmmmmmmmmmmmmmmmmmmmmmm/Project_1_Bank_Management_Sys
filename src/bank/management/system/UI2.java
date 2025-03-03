@@ -22,6 +22,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.io.File;
 import java.security.PublicKey;
 
 public class UI2 extends JFrame {
@@ -54,7 +55,32 @@ public class UI2 extends JFrame {
         }
 
     }
-    //this function is used in SignUPNEW an additional playground not in the main code
+    public UI2(int width, int height, String title, boolean center,int x,int y) {
+        this.width = width;
+        this.height = height;
+
+        setSize(width, height);
+        setTitle(title);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setUndecorated(true);
+        setLayout(null);
+
+        // Centering the pop-up dynamically
+        if(center){
+            Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+            int centerX = (screenSize.width - width) / 2;
+            int centerY = (screenSize.height - height) / 2;
+            setLocation(centerX, centerY);
+        }else{
+            setLocation(x,y);
+        }
+
+    }
+    //this function is used in SignUPNEW an additional
+    // playground not in the main code
+
+
+
     protected JTextField addLabelWithTextField2(String text, String fontName, int fontStyle, int fontSize,
                                                 int x, int y, int textFieldWidth, int textFieldHeight,
                                                 int labelWidth, int spacing, boolean transparent,
@@ -1918,6 +1944,7 @@ public class UI2 extends JFrame {
 
 
 
+
     protected JTextField addLabelWithTextField2(
             // Label parameters:
             String labelText, String labelFontName, int labelFontStyle, int labelFontSize,
@@ -2061,6 +2088,256 @@ public class UI2 extends JFrame {
 
         textField.repaint();
     }
+
+    protected JTextField addLabelWithTextField2(
+            // Label parameters:
+            String labelText, String labelFontName, int labelFontStyle, int labelFontSize,
+            int x, int y,
+            // Label color (numeric RGB):
+            int labelTextR, int labelTextG, int labelTextB,
+            int labelWidth, int spacing,
+            // Text field parameters:
+            String textFieldFontName, int textFieldFontStyle, int textFieldFontSize,
+            int textFieldWidth, int textFieldHeight,
+            // Text field color (numeric RGB):
+            int textFieldColorR, int textFieldColorG, int textFieldColorB,
+            // Border color (numeric RGB):
+            int borderR, int borderG, int borderB,
+            // Background color for text field (numeric RGB):
+            int bgR, int bgG, int bgB, int arc,
+            // Transparency settings:
+            boolean transparent, int opacityLevel,
+            // Optional: text field x position override
+            int textFieldX
+    ) {
+        // Create label
+        JLabel label = new JLabel(labelText);
+        label.setFont(new Font(labelFontName, labelFontStyle, labelFontSize));
+        label.putClientProperty(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+        label.setForeground(new Color(labelTextR, labelTextG, labelTextB));
+
+        Dimension size = label.getPreferredSize();
+        int padding = Math.min(2, size.width / 20);
+        label.setBorder(BorderFactory.createEmptyBorder(0, padding, 0, padding));
+        label.setSize(size.width + padding * 2, size.height);
+        label.setBounds(x, y, label.getWidth() + 10, label.getHeight());
+        add(label);
+
+        // Create text field
+        JTextField textField = justTextField2(
+                (textFieldX > 0) ? textFieldX : x + labelWidth + spacing, y, textFieldWidth, textFieldHeight,
+                textFieldFontName, textFieldFontStyle, textFieldFontSize,
+                textFieldColorR, textFieldColorG, textFieldColorB,
+                borderR, borderG, borderB,
+                bgR, bgG, bgB, arc,
+                transparent, opacityLevel
+        );
+
+        add(textField);
+        return textField;
+    }
+    protected JPasswordField addLabelWithPasswordField3(
+            // Label parameters:
+            String labelText, String labelFontName, int labelFontStyle, int labelFontSize,
+            int x, int y,
+            // Label color (numeric RGB):
+            int labelTextR, int labelTextG, int labelTextB,
+            int labelWidth, int spacing,
+            // Text field parameters:
+            String textFieldFontName, int textFieldFontStyle, int textFieldFontSize,
+            int textFieldWidth, int textFieldHeight,
+            // Text field color (numeric RGB):
+            int textFieldColorR, int textFieldColorG, int textFieldColorB,
+            // Border color (numeric RGB):
+            int borderR, int borderG, int borderB,
+            // Background color for text field (numeric RGB):
+            int bgR, int bgG, int bgB, int arc,
+            // Transparency settings:
+            boolean transparent, int opacityLevel,
+            // Optional: text field x position override
+            int textFieldX
+    ) {
+        // Create label
+        JLabel label = new JLabel(labelText);
+        label.setFont(new Font(labelFontName, labelFontStyle, labelFontSize));
+        label.putClientProperty(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+        label.setForeground(new Color(labelTextR, labelTextG, labelTextB));
+
+        Dimension size = label.getPreferredSize();
+        int padding = Math.min(2, size.width / 20);
+        label.setBorder(BorderFactory.createEmptyBorder(0, padding, 0, padding));
+        label.setSize(size.width + padding * 2, size.height);
+        label.setBounds(x, y, label.getWidth() + 10, label.getHeight());
+        add(label);
+
+        // Create text field
+        JPasswordField textField = justPasswordField2(
+                (textFieldX > 0) ? textFieldX : x + labelWidth + spacing, y, textFieldWidth, textFieldHeight,
+                textFieldFontName, textFieldFontStyle, textFieldFontSize,
+                textFieldColorR, textFieldColorG, textFieldColorB,
+                borderR, borderG, borderB,
+                bgR, bgG, bgB, arc,
+                transparent, opacityLevel
+        );
+
+        add(textField);
+        return textField;
+    }
+    protected JPasswordField justPasswordField2(
+            int x, int y, int textFieldWidth, int textFieldHeight,
+            String textFieldFontName, int textFieldFontStyle, int textFieldFontSize,
+            int textFieldColorR, int textFieldColorG, int textFieldColorB,
+            int borderR, int borderG, int borderB,
+            int bgR, int bgG, int bgB, int arc,
+            boolean transparent, int opacityLevel
+    ) {
+        JPasswordField textField = new JPasswordField() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+                // Fill the rounded rectangle with the background color
+                if (!transparent) {
+                    g2.setColor(new Color(bgR, bgG, bgB, opacityLevel));
+                    g2.fillRoundRect(0, 0, getWidth(), getHeight(), arc, arc);
+                }
+
+                g2.dispose();
+                super.paintComponent(g); // Draw text on top
+            }
+
+            @Override
+            protected void paintBorder(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+                // Draw the rounded border
+                g2.setColor(new Color(borderR, borderG, borderB));
+                g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, arc, arc);
+
+                g2.dispose();
+            }
+        };
+
+        // Set font and bounds
+        textField.setFont(new Font(textFieldFontName, textFieldFontStyle, textFieldFontSize));
+        textField.setBounds(x, y, textFieldWidth, textFieldHeight);
+
+        // Set text color
+        textField.setForeground(new Color(textFieldColorR, textFieldColorG, textFieldColorB));
+
+        // Transparency settings
+        textField.setOpaque(false); // Prevent default background fill
+
+        // Set padding inside text field
+        textField.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+
+        add(textField);
+        return textField;
+    }
+    protected JTextField justTextField2(
+            int x, int y, int textFieldWidth, int textFieldHeight,
+            String textFieldFontName, int textFieldFontStyle, int textFieldFontSize,
+            int textFieldColorR, int textFieldColorG, int textFieldColorB,
+            int borderR, int borderG, int borderB,
+            int bgR, int bgG, int bgB, int arc,
+            boolean transparent, int opacityLevel
+    ) {
+        JTextField textField = new JTextField() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+                // Fill the rounded rectangle with the background color
+                if (!transparent) {
+                    g2.setColor(new Color(bgR, bgG, bgB, opacityLevel));
+                    g2.fillRoundRect(0, 0, getWidth(), getHeight(), arc, arc);
+                }
+
+                g2.dispose();
+                super.paintComponent(g); // Draw text on top
+            }
+
+            @Override
+            protected void paintBorder(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+                // Draw the rounded border
+                g2.setColor(new Color(borderR, borderG, borderB));
+                g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, arc, arc);
+
+                g2.dispose();
+            }
+        };
+
+        // Set font and bounds
+        textField.setFont(new Font(textFieldFontName, textFieldFontStyle, textFieldFontSize));
+        textField.setBounds(x, y, textFieldWidth, textFieldHeight);
+
+        // Set text color
+        textField.setForeground(new Color(textFieldColorR, textFieldColorG, textFieldColorB));
+
+        // Transparency settings
+        textField.setOpaque(false); // Prevent default background fill
+
+        // Set padding inside text field
+        textField.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+
+        add(textField);
+        return textField;
+    }
+
+    protected JPasswordField addLabelWithPasswordField2(
+            // Label parameters:
+            String labelText, String labelFontName, int labelFontStyle, int labelFontSize,
+            int x, int y,
+            // Label color (numeric RGB):
+            int labelTextR, int labelTextG, int labelTextB,
+            int labelWidth, int spacing,
+            // Text field parameters:
+            String textFieldFontName, int textFieldFontStyle, int textFieldFontSize,
+            int textFieldWidth, int textFieldHeight,
+            // Text field color (numeric RGB):
+            int textFieldColorR, int textFieldColorG, int textFieldColorB,
+            // Border color (numeric RGB):
+            int borderR, int borderG, int borderB,
+            // Background color for text field (numeric RGB):
+            int bgR, int bgG, int bgB, int arc,
+            // Transparency settings:
+            boolean transparent, int opacityLevel,
+            // Optional: text field x position override
+            int textFieldX
+    ) {
+        // Create label
+        JLabel label = new JLabel(labelText);
+        label.setFont(new Font(labelFontName, labelFontStyle, labelFontSize));
+        label.putClientProperty(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+        label.setForeground(new Color(labelTextR, labelTextG, labelTextB));
+
+        Dimension size = label.getPreferredSize();
+        int padding = Math.min(2, size.width / 20);
+        label.setBorder(BorderFactory.createEmptyBorder(0, padding, 0, padding));
+        label.setSize(size.width + padding * 2, size.height);
+        label.setBounds(x, y, label.getWidth() + 10, label.getHeight());
+        add(label);
+
+        // Create text field
+        JPasswordField textField = justPasswordField(
+                (textFieldX > 0) ? textFieldX : x + labelWidth + spacing, y, textFieldWidth, textFieldHeight,
+                textFieldFontName, textFieldFontStyle, textFieldFontSize,
+                textFieldColorR, textFieldColorG, textFieldColorB,
+                borderR, borderG, borderB,
+                bgR, bgG, bgB, arc,
+                transparent, opacityLevel
+        );
+
+        add(textField);
+        return textField;
+    }
+
 
     JButton addRoundedButton(String text, String fontName, int fontStyle, int fontSize,
                              int x, int y, int width, int height,
@@ -2442,6 +2719,36 @@ public class UI2 extends JFrame {
 
         // Create text field
         JTextField textField = new JTextField();
+        textField.setFont(new Font(textFieldFontName, textFieldFontStyle, textFieldFontSize));
+        textField.setBounds(x, y, textFieldWidth, textFieldHeight);
+
+        // Apply our custom rounded text field styling
+        makeRoundedTextField(textField, textFieldWidth, textFieldHeight, arc, transparent, opacityLevel,
+                new Color(bgR, bgG, bgB), new Color(borderR, borderG, borderB));
+
+        textField.setForeground(new Color(textFieldColorR, textFieldColorG, textFieldColorB));
+
+        add(textField);
+        return textField;
+    }
+
+
+    protected JPasswordField justPasswordField(
+            // Text field parameters:
+            int x, int y, int textFieldWidth, int textFieldHeight,
+            String textFieldFontName, int textFieldFontStyle, int textFieldFontSize,
+            // Text field color (numeric RGB):
+            int textFieldColorR, int textFieldColorG, int textFieldColorB,
+            // Border color (numeric RGB):
+            int borderR, int borderG, int borderB,
+            // Background color for text field (numeric RGB):
+            int bgR, int bgG, int bgB,int arc,
+            // Transparency settings:
+            boolean transparent, int opacityLevel
+    ) {
+
+        // Create text field
+        JPasswordField textField = new JPasswordField();
         textField.setFont(new Font(textFieldFontName, textFieldFontStyle, textFieldFontSize));
         textField.setBounds(x, y, textFieldWidth, textFieldHeight);
 

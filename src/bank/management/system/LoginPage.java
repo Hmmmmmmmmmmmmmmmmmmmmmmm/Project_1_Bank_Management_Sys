@@ -47,26 +47,27 @@ public class LoginPage extends UI2 implements ActionListener {
                 250, 35,                           // Text field dimensions
                 0, 0, 0,                          // Text field text color: black
                 50, 50, 50,                       // Border color: dark gray
-                245, 245, 245,                     // Background color: very light gray
+                245, 245, 245,
+                20,                    // Background color: very light gray
                 true,                              // Transparent flag
                 opacityLevel,                      // Opacity level (e.g., 178 for 70%)
                 -1                                 // textFieldX override (-1 means calculate default)
         );
 
 
-        pinField = addLabelWithPasswordField2(
+        pinField = addLabelWithPasswordField3(
                 "PIN:",
                 "Times New Roman", Font.BOLD, 20,  // Label font
-                70, 255,                           // Label position
+                70, 260,                           // Label position
                 255, 255, 255,                     // Label text color: white
                 220, 15,                           // labelWidth, spacing
                 "Times New Roman", Font.BOLD, 16,  // Password field font
                 250, 35,                           // Password field dimensions
                 0, 0, 0,                          // Password field text color: black
                 50, 50, 50,                       // Border color: dark gray
-                245, 245, 245,                     // Background color: very light gray
+                245, 245, 245,20,                     // Background color: very light gray
                 true,                              // Transparent flag
-                opacityLevel - 1                   // Slightly lower opacity for PIN field if desired
+                opacityLevel - 1 ,-1                  // Slightly lower opacity for PIN field if desired
         );
 
         //regex

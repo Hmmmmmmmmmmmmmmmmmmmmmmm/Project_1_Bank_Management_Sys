@@ -54,7 +54,7 @@ public class BalanceInquiry extends UI2 implements ActionListener {
             ResultSet resultSet = con.statement.executeQuery("select * from Deposit where Pin = '"+pin+"'");
             while (resultSet.next()){
                 if(resultSet.getString("type").equals("Deposit")){
-                    balance = Integer.parseInt(resultSet.getString("amount"));
+                    balance += Integer.parseInt(resultSet.getString("amount"));
                 }else{
                     balance-=Integer.parseInt(resultSet.getString("amount"));
                 }
