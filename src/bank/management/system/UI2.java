@@ -11,19 +11,13 @@ import com.toedter.calendar.JDateChooser;
 
 import javax.swing.*;
 import javax.swing.border.Border;
-import javax.swing.plaf.ColorUIResource;
 import javax.swing.plaf.basic.BasicButtonUI;
-import javax.swing.plaf.basic.BasicComboBoxEditor;
 import javax.swing.plaf.basic.BasicComboBoxUI;
-import javax.swing.plaf.basic.BasicRadioButtonUI;
 import javax.swing.text.*;
 import javax.swing.text.AbstractDocument;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.io.File;
-import java.security.PublicKey;
 
 public class UI2 extends JFrame {
 
@@ -153,7 +147,8 @@ public class UI2 extends JFrame {
         JLabel imageLabel = new JLabel(scaledImageIcon); // Create JLabel to hold the image
         imageLabel.setBounds(x, y, width, height); // Set bounds for positioning
         add(imageLabel); // Add the label with the image to the window
-    }
+    }//Image addition
+
 
     //Label
     protected void addLabel(String text, String fontName, int fontStyle, int fontSize, int x, int y, boolean center, boolean colorChange, String color) {
@@ -455,6 +450,112 @@ public class UI2 extends JFrame {
         ImageIcon calendarIcon = new ImageIcon(new ImageIcon("C:\\xtra\\Last_Chance\\BMS\\src\\icons\\calendar.png").getImage().getScaledInstance(20, 25, Image.SCALE_SMOOTH));
 
 // Create JDateChooser
+        JDateChooser dateChooser = new JDateChooser();
+        dateChooser.setFont(new Font(fontName, Font.BOLD, 16));
+        dateChooser.setBounds(x + spacing, y, textFieldWidth, textFieldHeight);
+
+// Remove border & background
+        dateChooser.setBorder(null);
+        dateChooser.setOpaque(false);
+        dateChooser.setBackground(new Color(0, 0, 0, 0));
+
+// Get internal JTextField and make it transparent
+        JTextField editor = (JTextField) dateChooser.getDateEditor().getUiComponent();
+        editor.setOpaque(false);
+        editor.setBackground(new Color(0, 0, 0, 0));
+        editor.setBorder(null);
+        editor.setForeground(Color.WHITE);
+        editor.setCaretColor(Color.WHITE); // Ensure cursor is visible
+
+// Get the calendar button
+        JButton calendarButton = dateChooser.getCalendarButton();
+        calendarButton.setIcon(calendarIcon);
+        calendarButton.setOpaque(false);
+        calendarButton.setContentAreaFilled(false);
+        calendarButton.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2)); // Adjust outer spacing
+        calendarButton.setMargin(new Insets(2, 2, 2, 2)); // Adjust padding inside the button
+        calendarButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+// Ensure the button is correctly positioned within the layout
+        calendarButton.setFocusable(false);
+        editor.setFocusable(true);
+
+// Force UI refresh
+        SwingUtilities.invokeLater(() -> {
+            dateChooser.updateUI();
+            dateChooser.revalidate();
+            dateChooser.repaint();
+        });
+        // Apply rounded border
+        makeRoundedCalenderField(dateChooser, textFieldWidth, textFieldHeight, 20);
+
+        add(dateChooser);
+        return dateChooser;
+    } // uses another function to make the things rounded! aka
+
+    protected JDateChooser addLabelWithTextFieldWithCalender2(String text, String fontName, int fontStyle, int fontSize,
+                                                             int x, int y, boolean colorChange, String color, int textFieldWidth, int textFieldHeight,
+                                                             int labelWidth, int spacing, boolean opaque, float opacityLevel) { // Added opacity parameters
+
+        JLabel label = new JLabel(text); //object thingy
+        label.setFont(new Font(fontName, fontStyle, fontSize));//using parameters
+        // Enable antialiasing for smoother text rendering
+        label.putClientProperty(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+
+        // Get preferred size
+        Dimension size = label.getPreferredSize();
+
+        // Add subtle padding dynamically (2-5px based on text length)
+        int padding = Math.min(5, size.width / 20); // Scale padding based on text size
+
+        // Apply an empty border for subtle spacing
+        label.setBorder(BorderFactory.createEmptyBorder(0, padding, 0, padding));
+
+        // Adjust size with subtle padding
+        label.setSize(size.width + padding * 2, size.height);
+
+        if (colorChange) {
+            try {
+                // Use reflection to convert the string to a Color object
+                Color labelColor = (Color) Color.class.getField(color.toLowerCase()).get(null);
+                label.setForeground(labelColor);
+            } catch (Exception e) {
+                // Default to white if the color name is invalid
+                label.setForeground(Color.WHITE);
+                System.out.println("Invalid color name: " + color + ". Defaulting to white.");
+            }
+        }
+
+        // Set final position
+        //taking extra 5 px cuz no clue why the fuck it wont take it any other way!????
+        label.setBounds(x, y, label.getWidth()+5, label.getHeight());
+        add(label);
+
+        //icon for calender!!!!!
+        ImageIcon calendarIcon = new ImageIcon(new ImageIcon("C:\\xtra\\Last_Chance\\BMS\\src\\icons\\calendar.png").getImage().getScaledInstance(20, 25, Image.SCALE_SMOOTH));
+
+        //adding this here:
+        // 🎨 Custom Panel for Rounded Background
+        JPanel dateChooserPanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+                // Apply semi-transparent background with rounded edges
+                if (!opaque) {
+                    g2.setColor(new Color(255, 255, 255, (int) (opacityLevel * 255))); // Dynamic opacity
+                    g2.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20); // Rounded fill
+                }
+
+                g2.dispose();
+            }
+        };
+        dateChooserPanel.setLayout(null);
+        dateChooserPanel.setBounds(x + spacing, y, textFieldWidth, textFieldHeight);
+        dateChooserPanel.setOpaque(false);
+
+        // Create JDateChooser
         JDateChooser dateChooser = new JDateChooser();
         dateChooser.setFont(new Font(fontName, Font.BOLD, 16));
         dateChooser.setBounds(x + spacing, y, textFieldWidth, textFieldHeight);
@@ -1324,7 +1425,8 @@ public class UI2 extends JFrame {
     //last trial at this
     //swing is shit
     //anyhow this one works
-    protected JComboBox<String> addLabelWithDropdown6(String text, String fontName, int fontStyle, int fontSize,
+    //60 is the old and correct transparent but rest good one
+    protected JComboBox<String> addLabelWithDropdown60(String text, String fontName, int fontStyle, int fontSize,
                                                          int x, int y, boolean colorChange, String color,
                                                          int dropdownWidth, int dropdownHeight,
                                                          int labelWidth, int spacing,
@@ -1444,6 +1546,127 @@ public class UI2 extends JFrame {
          return comboBox;
      }
 
+    protected JComboBox<String> addLabelWithDropdown6(String text, String fontName, int fontStyle, int fontSize,
+                                                      int x, int y, boolean colorChange, String color,
+                                                      int dropdownWidth, int dropdownHeight,
+                                                      int labelWidth, int spacing,
+                                                      String[] options, boolean opaque, float opacityLevel) {
+
+        // 🔖 Create Label
+        JLabel label = new JLabel(text);
+        label.setFont(new Font(fontName, fontStyle, fontSize));
+        label.putClientProperty(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+
+        // Dynamic Padding
+        Dimension size = label.getPreferredSize();
+        int padding = Math.min(5, size.width / 20);
+        label.setBorder(BorderFactory.createEmptyBorder(0, padding, 0, padding));
+        label.setSize(size.width + padding * 2, size.height);
+
+        // Color Management
+        if (colorChange) {
+            try {
+                Color labelColor = (Color) Color.class.getField(color.toLowerCase()).get(null);
+                label.setForeground(labelColor);
+            } catch (Exception e) {
+                label.setForeground(Color.WHITE);
+                System.out.println("Invalid color name: " + color + ". Defaulting to white.");
+            }
+        }
+
+        // Positioning the Label
+        label.setBounds(x, y, label.getWidth() + 5, label.getHeight());
+        add(label);
+
+        // 🔹 Custom Background Panel with Rounded Fill
+        JPanel comboPanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+                // Apply semi-transparent background with rounded edges
+                g2.setColor(new Color(255, 255, 255, (int) (opacityLevel * 255)));  // Adjust opacity dynamically
+                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20); // Rounded Fill Only
+
+                g2.dispose();
+            }
+        };
+        comboPanel.setLayout(null);
+        comboPanel.setBounds(x + spacing, y, dropdownWidth, dropdownHeight);
+        comboPanel.setOpaque(false); // Ensure transparency is handled correctly
+
+        // 🔹 Create the JComboBox
+        JComboBox<String> comboBox = new JComboBox<>(options);
+        comboBox.setFont(new Font(fontName, Font.PLAIN, 18));
+        comboBox.setBounds(5, 5, dropdownWidth - 10, dropdownHeight - 10); // Inner padding for border effect
+        comboBox.setOpaque(false); // Transparent text field
+        comboBox.setBackground(new Color(0, 0, 0, 0)); // Fully transparent field
+        comboBox.setForeground(Color.BLACK);
+        comboBox.setBorder(null);
+        comboBox.setFocusable(true);
+
+        // 🔹 Custom UI for Arrow Button
+        comboBox.setUI(new BasicComboBoxUI() {
+            @Override
+            protected JButton createArrowButton() {
+                JButton button = new JButton();
+                button.setOpaque(false);
+                button.setContentAreaFilled(false);
+                button.setBorder(BorderFactory.createEmptyBorder());
+                button.setBackground(new Color(0, 0, 0, 0));
+                button.setFocusPainted(false);
+
+                button.setUI(new BasicButtonUI() {
+                    @Override
+                    public void paint(Graphics g, JComponent c) {
+                        Graphics2D g2 = (Graphics2D) g;
+                        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+                        int w = c.getWidth();
+                        int h = c.getHeight();
+                        int[] xPoints = { w / 4, w / 2, 3 * w / 4 };
+                        int[] yPoints = { h / 3, 2 * h / 3, h / 3 };
+
+                        g2.setColor(Color.DARK_GRAY);
+                        g2.fillPolygon(xPoints, yPoints, 3);
+                    }
+                });
+                return button;
+            }
+
+            @Override
+            public void paintCurrentValueBackground(Graphics g, Rectangle bounds, boolean hasFocus) {
+                // No background to keep transparency
+            }
+
+            protected void paintFocus(Graphics g, Rectangle bounds) {
+                // Remove focus ring
+            }
+
+            protected void paintCurrentValueFocus(Graphics g, Rectangle bounds, boolean hasFocus) {
+                // Remove any leftover focus outline
+            }
+        });
+
+        // 🔹 Simple Renderer for Dropdown Items
+        comboBox.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                JLabel renderer = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                renderer.setFont(new Font(fontName, Font.PLAIN, 18));
+                renderer.setOpaque(true);
+                renderer.setBackground(isSelected ? Color.LIGHT_GRAY : Color.WHITE);
+                renderer.setForeground(Color.BLACK);
+                return renderer;
+            }
+        });
+
+        // 🔹 Add Rounded Fill Only (No Extra Border)
+        comboPanel.add(comboBox);
+        add(comboPanel);
+        return comboBox;
+    }
 
 
     protected JComboBox<String> addCustomDropdown(String text, String fontName, int fontStyle, int fontSize,
@@ -1795,7 +2018,7 @@ public class UI2 extends JFrame {
                     g2.setColor(Color.DARK_GRAY); // New grey fill when selected
                     g2.fillOval(x + 4, y + 4, size - 8, size - 8);
                 } else {
-                    g2.setColor(Color.LIGHT_GRAY); // Default fill color
+                    g2.setColor(new Color(192,192,192)); // Default fill color
                     g2.fillOval(x + 2, y + 2, size - 4, size - 4);
                 }
                 g2.dispose();
@@ -2339,7 +2562,7 @@ public class UI2 extends JFrame {
     }
 
 
-    JButton addRoundedButton(String text, String fontName, int fontStyle, int fontSize,
+    public JButton addRoundedButton(String text, String fontName, int fontStyle, int fontSize,
                              int x, int y, int width, int height,
                              boolean opaque, // Means fully opaque or not
                              boolean transparent, // If true, we use opacityLevel for the fill
@@ -2409,8 +2632,8 @@ public class UI2 extends JFrame {
 
         // 7. Hover & Click Effect
         Color normalColor = new Color(50, 150, 250);
-        Color hoverColor = new Color(30, 130, 230);
-        Color clickColor = new Color(20, 100, 200);
+        Color hoverColor = new Color(97, 24, 24);
+        Color clickColor = new Color(97, 24, 24);
 
         button.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
@@ -2990,6 +3213,13 @@ public class UI2 extends JFrame {
         }
     }
 
+    protected JLabel createErrorIcon(String imagePath, int x, int y, int width, int height) {
+        ImageIcon icon = new ImageIcon(new ImageIcon(imagePath).getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH));
+        JLabel errorLabel = new JLabel(icon);
+        errorLabel.setBounds(x, y, width, height);
+        return errorLabel;
+    }
+
     //reChecker
     protected boolean applyInputValidation(
             JTextComponent field,
@@ -3000,8 +3230,8 @@ public class UI2 extends JFrame {
             boolean playBeep,
             String hardRegex,
             boolean isClearAction,
-            int iconXOffset, // Dynamic X-offset relative to the text field
-            int iconYOffset, // Dynamic Y-offset relative to the text field
+            int iconX, // Dynamic X-offset relative to the text field
+            int iconY, // Dynamic Y-offset relative to the text field
             int iconWidth,   // Icon width
             int iconHeight   // Icon height
     ) {
@@ -3021,17 +3251,10 @@ public class UI2 extends JFrame {
             if (playBeep) {
                 Toolkit.getDefaultToolkit().beep();
             }
-
             // Show customizable warning message
             JOptionPane.showMessageDialog(null, warningMsg, msgTitle, msgType);
-
-//            // Set the icon position dynamically relative to the text field
-//            int x = field.getX() + field.getWidth() + iconXOffset;
-//            int y = field.getY() + iconYOffset;
-//
-//            errorIcon.setBounds(x, y, iconWidth, iconHeight);
+//            errorIcon.setBounds(iconX, iconY, iconWidth, iconHeight);
 //            errorIcon.setVisible(true);
-//
 //            revalidate();
 //            repaint();
             return false; // Input is invalid
@@ -3044,7 +3267,32 @@ public class UI2 extends JFrame {
         return true;
     }
 
+    protected JLabel showErrorIcon(boolean correctEntries, String imagePath, int x, int y, int width, int height, JLabel errorIcon) {
+        // If the entries are not correct, show the error icon
+        if (!correctEntries) {
+            // Remove existing error icon if it exists
 
+            // Load and scale the image
+            ImageIcon icon = new ImageIcon(
+                    new ImageIcon(imagePath).getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH)
+            );
+            // Create a label to hold the error icon
+            JLabel errorIconLabel = new JLabel(icon);
+            errorIconLabel.setBounds(x, y, width, height); // Set desired position and size
+            add(errorIconLabel);
+            revalidate();
+            repaint();
+            System.out.println("i am comming out");
+            return errorIconLabel;
+        } else {
+            // If entries are correct, remove any existing error icon
+            if (errorIcon != null) {
+                remove(errorIcon);
+                revalidate();
+                repaint();
+            }
+            return null;
+        }
 
 //    protected void removeErrorIcon(JTextComponent field) {
 //        String iconLabelName = field.getName() + "_errorIcon";
@@ -3067,6 +3315,8 @@ public class UI2 extends JFrame {
 
 
 }
+
+
 class RoundedBorder implements Border {
     private final int radius;
     private final Color borderColor;
@@ -3107,6 +3357,7 @@ class RoundedBorder implements Border {
         g2.setColor(borderColor);
         g2.drawRoundRect(x + 1, y + 1, width - 2, height - 2, radius, radius);
     }
+}
 }
 
 

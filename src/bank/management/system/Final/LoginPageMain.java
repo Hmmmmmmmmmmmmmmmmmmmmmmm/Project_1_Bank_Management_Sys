@@ -196,4 +196,7 @@ public class LoginPageMain extends FunctionsAndUI implements ActionListener{
             }
         }
 
+    public static void main(String[] args) {
+        new LoginPageMain();
+    }
 }

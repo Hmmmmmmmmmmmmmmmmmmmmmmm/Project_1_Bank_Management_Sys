@@ -297,7 +297,7 @@ public class LoginFirst extends JFrame implements ActionListener {
 //        button.setBorderPainted(true); // Ensures border is drawn
 //
 //        // Apply rounded border
-//        button.setBorder(new RoundedBorder(20, Color.DARK_GRAY));
+//        button.setBorder(new RoundedBorder3(20, Color.DARK_GRAY));
 //
 //        // Position the button
 //        button.setBounds(x, y, width, height);
@@ -395,7 +395,7 @@ public class LoginFirst extends JFrame implements ActionListener {
 //            button.setContentAreaFilled(false); // Transparent background
 //        }
 //
-//        button.setBorder(new RoundedBorder(20, Color.DARK_GRAY));
+//        button.setBorder(new RoundedBorder3(20, Color.DARK_GRAY));
 //        button.setForeground(Color.WHITE); // Text color
 //
 //        // Hover Effect
@@ -449,7 +449,7 @@ public class LoginFirst extends JFrame implements ActionListener {
         }
 
         // Set the rounded border
-        button.setBorder(new RoundedBorder(20, Color.DARK_GRAY));
+        button.setBorder(new RoundedBorder3(20, Color.DARK_GRAY));
 
         //remove the fucking annoying lil white box
         button.setFocusPainted(false);
@@ -458,17 +458,17 @@ public class LoginFirst extends JFrame implements ActionListener {
         button.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                button.setBorder(new RoundedBorder(20, hoverColor)); // Change border color
+                button.setBorder(new RoundedBorder3(20, hoverColor)); // Change border color
                 button.setForeground(Color.WHITE); // Ensure text is visible
             }
 
             @Override
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                button.setBorder(new RoundedBorder(20, Color.DARK_GRAY)); // Revert border color
+                button.setBorder(new RoundedBorder3(20, Color.DARK_GRAY)); // Revert border color
             }
             @Override
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                button.setBorder(new RoundedBorder(20, clickColor)); // Darker border on click
+                button.setBorder(new RoundedBorder3(20, clickColor)); // Darker border on click
 
                 if (opaque) {
                     button.setBackground(clickColor); // Change background only if opaque
@@ -484,7 +484,7 @@ public class LoginFirst extends JFrame implements ActionListener {
             @Override
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 if (button.getBounds().contains(evt.getPoint())) {
-                    button.setBorder(new RoundedBorder(20, hoverColor)); // Return to hover color
+                    button.setBorder(new RoundedBorder3(20, hoverColor)); // Return to hover color
 
                     if (opaque) {
                         button.setBackground(hoverColor); // Keep hover color if opaque
@@ -492,7 +492,7 @@ public class LoginFirst extends JFrame implements ActionListener {
                         button.setForeground(Color.WHITE); // Reset text for transparent button
                     }
                 } else {
-                    button.setBorder(new RoundedBorder(20, Color.DARK_GRAY)); // Reset border
+                    button.setBorder(new RoundedBorder3(20, Color.DARK_GRAY)); // Reset border
 
                     if (opaque) {
                         button.setBackground(normalColor); // Reset background
@@ -511,7 +511,7 @@ public class LoginFirst extends JFrame implements ActionListener {
 
 //            @Override
 //            public void mousePressed(java.awt.event.MouseEvent evt) {
-//                button.setBorder(new RoundedBorder(20, clickColor)); // Darker border on click
+//                button.setBorder(new RoundedBorder3(20, clickColor)); // Darker border on click
 //
 //                if (opaque) {
 //                    button.setBackground(clickColor); // Change background only if opaque
@@ -526,7 +526,7 @@ public class LoginFirst extends JFrame implements ActionListener {
 //            @Override
 //            public void mouseReleased(java.awt.event.MouseEvent evt) {
 //                if (button.getBounds().contains(evt.getPoint())) {
-//                    button.setBorder(new RoundedBorder(20, hoverColor)); // Return to hover color
+//                    button.setBorder(new RoundedBorder3(20, hoverColor)); // Return to hover color
 //
 //                    if (opaque) {
 //                        button.setBackground(hoverColor); // Keep hover color if opaque
@@ -534,7 +534,7 @@ public class LoginFirst extends JFrame implements ActionListener {
 //                        button.setForeground(Color.WHITE); // Reset text for transparent button
 //                    }
 //                } else {
-//                    button.setBorder(new RoundedBorder(20, Color.DARK_GRAY)); // Reset border
+//                    button.setBorder(new RoundedBorder3(20, Color.DARK_GRAY)); // Reset border
 //
 //                    if (opaque) {
 //                        button.setBackground(normalColor); // Reset background
@@ -561,7 +561,7 @@ public class LoginFirst extends JFrame implements ActionListener {
 
         // Apply the fixed rounded border
         textField.setBorder(BorderFactory.createCompoundBorder(
-                new RoundedBorder(arc,Color.DARK_GRAY),
+                new RoundedBorder3(arc,Color.DARK_GRAY),
                 BorderFactory.createEmptyBorder(5, 10, 5, 10) // Padding
         ));
 
@@ -575,12 +575,12 @@ public class LoginFirst extends JFrame implements ActionListener {
 
     }
 }
-class RoundedBorder1 implements Border {
+class RoundedBorder31 implements Border {
     private final int radius;
     private final Color color;
 
 
-    RoundedBorder1(int radius, Color color) {
+    RoundedBorder31(int radius, Color color) {
         this.radius = radius;
         this.color = color;
     }

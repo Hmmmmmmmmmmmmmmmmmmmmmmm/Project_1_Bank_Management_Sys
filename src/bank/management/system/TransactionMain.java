@@ -16,10 +16,11 @@ public class TransactionMain extends UI2 implements ActionListener {
     private JButton depositB, cashWithdrawal, fastCash, miniStatement,
                     pinChange, balanceInquiry, exit;
     String pin;
+    String cardNumber;
     private final int opacityLevel = 200;
-    TransactionMain(String pin){
+    TransactionMain(String cardNumber){
         super(1550,1080,"Main",false);
-        this.pin = pin;
+        this.cardNumber = cardNumber;
         addLabel("Please Select Your Transaction", "Times New Roman Bold",
                 Font.PLAIN, 28,
                 430, 170, false, true,
@@ -113,27 +114,27 @@ public class TransactionMain extends UI2 implements ActionListener {
         // pinChange, balanceInquiry, exit;
         try{
             if(e.getSource()==depositB){
-                new Deposit(pin);
+                new Deposit(cardNumber);
                 setVisible(false);
             }else if(e.getSource()==cashWithdrawal){
 //                setVisible(false);
-                new CashWithdrawal(pin);
+                new CashWithdrawal(cardNumber);
                 setVisible(false);
             }else if(e.getSource()==balanceInquiry){
 //                setVisible(false);
-                new BalanceInquiry(pin);
+                new BalanceInquiry(cardNumber);
                 setVisible(false);
             }else if(e.getSource()==fastCash){
 //                setVisible(false);
-                new FastCash(pin);
+                new FastCash(cardNumber);
                 setVisible(false);
             }else if(e.getSource()==pinChange){
 //                setVisible(false);
-                new ChangePin(pin);
+                new ChangePin(cardNumber);
                 setVisible(false);
             }else if(e.getSource()==miniStatement){
 //                setVisible(false);
-                new MiniStatement(pin);
+                new MiniStatement(cardNumber);
 //                setVisible(false);
             }else if(e.getSource()==exit){
 //                setVisible(false);

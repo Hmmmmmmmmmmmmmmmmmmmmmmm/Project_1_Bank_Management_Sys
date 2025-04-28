@@ -62,7 +62,7 @@ public class UIComponents {
         JButton button = new JButton(text);
         button.setFont(new Font(fontName, fontStyle, fontSize));
         button.setBounds(x, y, width, height);
-        button.setBorder(new RoundedBorder(20, Color.DARK_GRAY));
+        button.setBorder(new RoundedBorder3(20, Color.DARK_GRAY));
 
         if (!opaque) {
             button.setOpaque(false);
@@ -87,7 +87,7 @@ public class UIComponents {
         textField.setOpaque(false);
         textField.setBackground(Color.WHITE);
         textField.setBorder(BorderFactory.createCompoundBorder(
-                new RoundedBorder(arc, Color.DARK_GRAY),
+                new RoundedBorder3(arc, Color.DARK_GRAY),
                 BorderFactory.createEmptyBorder(5, 10, 5, 10)
         ));
     }

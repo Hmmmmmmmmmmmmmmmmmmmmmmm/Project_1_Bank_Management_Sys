@@ -2,6 +2,7 @@ package bank.management.system;
 import com.toedter.calendar.JDateChooser;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.plaf.basic.BasicRadioButtonUI;
 import javax.swing.text.*;
@@ -520,7 +521,7 @@ public abstract class UI extends JFrame {
         }
 
         // Set the rounded border
-        button.setBorder(new RoundedBorder(20, Color.DARK_GRAY));
+        button.setBorder(new RoundedBorder3(20, Color.DARK_GRAY));
 
         //remove the fucking annoying lil white box
         button.setFocusPainted(false);
@@ -529,17 +530,17 @@ public abstract class UI extends JFrame {
         button.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                button.setBorder(new RoundedBorder(20, hoverColor)); // Change border color
+                button.setBorder(new RoundedBorder3(20, hoverColor)); // Change border color
                 button.setForeground(Color.WHITE); // Ensure text is visible
             }
 
             @Override
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                button.setBorder(new RoundedBorder(20, Color.DARK_GRAY)); // Revert border color
+                button.setBorder(new RoundedBorder3(20, Color.DARK_GRAY)); // Revert border color
             }
             @Override
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                button.setBorder(new RoundedBorder(20, clickColor)); // Darker border on click
+                button.setBorder(new RoundedBorder3(20, clickColor)); // Darker border on click
 
                 if (opaque) {
                     button.setBackground(clickColor); // Change background only if opaque
@@ -555,7 +556,7 @@ public abstract class UI extends JFrame {
             @Override
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 if (button.getBounds().contains(evt.getPoint())) {
-                    button.setBorder(new RoundedBorder(20, hoverColor)); // Return to hover color
+                    button.setBorder(new RoundedBorder3(20, hoverColor)); // Return to hover color
 
                     if (opaque) {
                         button.setBackground(hoverColor); // Keep hover color if opaque
@@ -563,7 +564,7 @@ public abstract class UI extends JFrame {
                         button.setForeground(Color.WHITE); // Reset text for transparent button
                     }
                 } else {
-                    button.setBorder(new RoundedBorder(20, Color.DARK_GRAY)); // Reset border
+                    button.setBorder(new RoundedBorder3(20, Color.DARK_GRAY)); // Reset border
 
                     if (opaque) {
                         button.setBackground(normalColor); // Reset background
@@ -582,7 +583,7 @@ public abstract class UI extends JFrame {
 
 //            @Override
 //            public void mousePressed(java.awt.event.MouseEvent evt) {
-//                button.setBorder(new RoundedBorder(20, clickColor)); // Darker border on click
+//                button.setBorder(new RoundedBorder3(20, clickColor)); // Darker border on click
 //
 //                if (opaque) {
 //                    button.setBackground(clickColor); // Change background only if opaque
@@ -597,7 +598,7 @@ public abstract class UI extends JFrame {
 //            @Override
 //            public void mouseReleased(java.awt.event.MouseEvent evt) {
 //                if (button.getBounds().contains(evt.getPoint())) {
-//                    button.setBorder(new RoundedBorder(20, hoverColor)); // Return to hover color
+//                    button.setBorder(new RoundedBorder3(20, hoverColor)); // Return to hover color
 //
 //                    if (opaque) {
 //                        button.setBackground(hoverColor); // Keep hover color if opaque
@@ -605,7 +606,7 @@ public abstract class UI extends JFrame {
 //                        button.setForeground(Color.WHITE); // Reset text for transparent button
 //                    }
 //                } else {
-//                    button.setBorder(new RoundedBorder(20, Color.DARK_GRAY)); // Reset border
+//                    button.setBorder(new RoundedBorder3(20, Color.DARK_GRAY)); // Reset border
 //
 //                    if (opaque) {
 //                        button.setBackground(normalColor); // Reset background
@@ -723,7 +724,7 @@ public abstract class UI extends JFrame {
 
         // Apply the fixed rounded border
         textField.setBorder(BorderFactory.createCompoundBorder(
-                new RoundedBorder(arc,Color.DARK_GRAY),
+                new RoundedBorder3(arc,Color.DARK_GRAY),
                 BorderFactory.createEmptyBorder(5, 10, 5, 10) // Padding
         ));
 
@@ -873,7 +874,7 @@ public abstract class UI extends JFrame {
 //
 //        // Apply a rounded border with padding
 //        textField.setBorder(BorderFactory.createCompoundBorder(
-//                new RoundedBorder(arc, Color.DARK_GRAY),
+//                new RoundedBorder3(arc, Color.DARK_GRAY),
 //                BorderFactory.createEmptyBorder(5, 10, 5, 10) // Padding
 //        ));
 //
@@ -907,7 +908,7 @@ public abstract class UI extends JFrame {
 
         // Apply the fixed rounded border
         dateChooser.setBorder(BorderFactory.createCompoundBorder(
-                new RoundedBorder(arc,Color.DARK_GRAY),
+                new RoundedBorder3(arc,Color.DARK_GRAY),
                 BorderFactory.createEmptyBorder(5, 10, 5, 10) // Padding
         ));
 
@@ -946,7 +947,7 @@ public abstract class UI extends JFrame {
 ////        radioButton.setIcon(createTransparentIcon());
 ////        radioButton.setSelectedIcon(createSelectedTransparentIcon());
 //        // Apply custom UI to remove background rendering
-////        radioButton.setBorder(new RoundedBorder(arc, Color.BLACK));
+////        radioButton.setBorder(new RoundedBorder3(arc, Color.BLACK));
 //    }
 //    private void makeTransparentRadioButton1(JRadioButton radioButton) {
 //        radioButton.setOpaque(false);
@@ -1053,7 +1054,7 @@ public abstract class UI extends JFrame {
 //
 //        // Apply the rounded border
 //        radioButton.setBorder(BorderFactory.createCompoundBorder(
-//                new RoundedBorder(20, Color.DARK_GRAY), // Custom border
+//                new RoundedBorder3(20, Color.DARK_GRAY), // Custom border
 //                BorderFactory.createEmptyBorder(0, 0, 0, 0) // Padding
 //        ));
 //    }
@@ -1447,7 +1448,7 @@ class CustomRadioButtonUI extends BasicRadioButtonUI {
 ////        button.setBorderPainted(true); // Ensures border is drawn
 ////
 ////        // Apply rounded border
-////        button.setBorder(new RoundedBorder(20, Color.DARK_GRAY));
+////        button.setBorder(new RoundedBorder3(20, Color.DARK_GRAY));
 ////
 ////        // Position the button
 ////        button.setBounds(x, y, width, height);
@@ -1545,7 +1546,7 @@ class CustomRadioButtonUI extends BasicRadioButtonUI {
 ////            button.setContentAreaFilled(false); // Transparent background
 ////        }
 ////
-////        button.setBorder(new RoundedBorder(20, Color.DARK_GRAY));
+////        button.setBorder(new RoundedBorder3(20, Color.DARK_GRAY));
 ////        button.setForeground(Color.WHITE); // Text color
 ////
 ////        // Hover Effect
@@ -1599,7 +1600,7 @@ class CustomRadioButtonUI extends BasicRadioButtonUI {
 //        }
 //
 //        // Set the rounded border
-//        button.setBorder(new RoundedBorder(20, Color.DARK_GRAY));
+//        button.setBorder(new RoundedBorder3(20, Color.DARK_GRAY));
 //
 //        //remove the fucking annoying lil white box
 //        button.setFocusPainted(false);
@@ -1608,17 +1609,17 @@ class CustomRadioButtonUI extends BasicRadioButtonUI {
 //        button.addMouseListener(new java.awt.event.MouseAdapter() {
 //            @Override
 //            public void mouseEntered(java.awt.event.MouseEvent evt) {
-//                button.setBorder(new RoundedBorder(20, hoverColor)); // Change border color
+//                button.setBorder(new RoundedBorder3(20, hoverColor)); // Change border color
 //                button.setForeground(Color.WHITE); // Ensure text is visible
 //            }
 //
 //            @Override
 //            public void mouseExited(java.awt.event.MouseEvent evt) {
-//                button.setBorder(new RoundedBorder(20, Color.DARK_GRAY)); // Revert border color
+//                button.setBorder(new RoundedBorder3(20, Color.DARK_GRAY)); // Revert border color
 //            }
 //            @Override
 //            public void mousePressed(java.awt.event.MouseEvent evt) {
-//                button.setBorder(new RoundedBorder(20, clickColor)); // Darker border on click
+//                button.setBorder(new RoundedBorder3(20, clickColor)); // Darker border on click
 //
 //                if (opaque) {
 //                    button.setBackground(clickColor); // Change background only if opaque
@@ -1634,7 +1635,7 @@ class CustomRadioButtonUI extends BasicRadioButtonUI {
 //            @Override
 //            public void mouseReleased(java.awt.event.MouseEvent evt) {
 //                if (button.getBounds().contains(evt.getPoint())) {
-//                    button.setBorder(new RoundedBorder(20, hoverColor)); // Return to hover color
+//                    button.setBorder(new RoundedBorder3(20, hoverColor)); // Return to hover color
 //
 //                    if (opaque) {
 //                        button.setBackground(hoverColor); // Keep hover color if opaque
@@ -1642,7 +1643,7 @@ class CustomRadioButtonUI extends BasicRadioButtonUI {
 //                        button.setForeground(Color.WHITE); // Reset text for transparent button
 //                    }
 //                } else {
-//                    button.setBorder(new RoundedBorder(20, Color.DARK_GRAY)); // Reset border
+//                    button.setBorder(new RoundedBorder3(20, Color.DARK_GRAY)); // Reset border
 //
 //                    if (opaque) {
 //                        button.setBackground(normalColor); // Reset background
@@ -1661,7 +1662,7 @@ class CustomRadioButtonUI extends BasicRadioButtonUI {
 //
 ////            @Override
 ////            public void mousePressed(java.awt.event.MouseEvent evt) {
-////                button.setBorder(new RoundedBorder(20, clickColor)); // Darker border on click
+////                button.setBorder(new RoundedBorder3(20, clickColor)); // Darker border on click
 ////
 ////                if (opaque) {
 ////                    button.setBackground(clickColor); // Change background only if opaque
@@ -1676,7 +1677,7 @@ class CustomRadioButtonUI extends BasicRadioButtonUI {
 ////            @Override
 ////            public void mouseReleased(java.awt.event.MouseEvent evt) {
 ////                if (button.getBounds().contains(evt.getPoint())) {
-////                    button.setBorder(new RoundedBorder(20, hoverColor)); // Return to hover color
+////                    button.setBorder(new RoundedBorder3(20, hoverColor)); // Return to hover color
 ////
 ////                    if (opaque) {
 ////                        button.setBackground(hoverColor); // Keep hover color if opaque
@@ -1684,7 +1685,7 @@ class CustomRadioButtonUI extends BasicRadioButtonUI {
 ////                        button.setForeground(Color.WHITE); // Reset text for transparent button
 ////                    }
 ////                } else {
-////                    button.setBorder(new RoundedBorder(20, Color.DARK_GRAY)); // Reset border
+////                    button.setBorder(new RoundedBorder3(20, Color.DARK_GRAY)); // Reset border
 ////
 ////                    if (opaque) {
 ////                        button.setBackground(normalColor); // Reset background
@@ -1711,7 +1712,7 @@ class CustomRadioButtonUI extends BasicRadioButtonUI {
 //
 //        // Apply the fixed rounded border
 //        textField.setBorder(BorderFactory.createCompoundBorder(
-//                new RoundedBorder(arc,Color.DARK_GRAY),
+//                new RoundedBorder3(arc,Color.DARK_GRAY),
 //                BorderFactory.createEmptyBorder(5, 10, 5, 10) // Padding
 //        ));
 //
@@ -1725,11 +1726,11 @@ class CustomRadioButtonUI extends BasicRadioButtonUI {
 //
 //    }
 //}
-//class RoundedBorder2 implements Border {
+//class RoundedBorder32 implements Border {
 //    private final int radius;
 //    private final Color color;
 //
-//    public RoundedBorder(int radius, Color color) {
+//    public RoundedBorder3(int radius, Color color) {
 //        this.radius = radius;
 //        this.color = color;
 //    }
@@ -1861,3 +1862,45 @@ class CustomRadioButtonUI extends BasicRadioButtonUI {
 ////    add(customLabel);
 ////}
 //
+
+class RoundedBorder3 implements Border {
+    private final int radius;
+    private final Color borderColor;
+    private Color fillColor = null; // Optional fill color (null if no fill)
+
+    public RoundedBorder3(int radius, Color borderColor) {
+        this.radius = radius;
+        this.borderColor = borderColor;
+    }
+
+    // Optional method to set fill color with opacity
+    public void setFillColor(Color fillColor) {
+        this.fillColor = fillColor;
+    }
+
+    @Override
+    public Insets getBorderInsets(Component c) {
+        return new Insets(4, 4, 4, 4);
+    }
+
+    @Override
+    public boolean isBorderOpaque() {
+        return false;
+    }
+
+    @Override
+    public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+        // Fill the rounded rectangle if a fill color is set
+        if (fillColor != null) {
+            g2.setColor(fillColor);
+            g2.fillRoundRect(x + 1, y + 1, width - 2, height - 2, radius, radius);
+        }
+
+        // Draw the border on top
+        g2.setColor(borderColor);
+        g2.drawRoundRect(x + 1, y + 1, width - 2, height - 2, radius, radius);
+    }
+}
