@@ -28,6 +28,7 @@ public class SignUp2 extends UI2 implements ActionListener{
     public SignUp2(String formNo){
         //constructor call for basic calls
         super(850, 700, "Sign Up page 2",true);
+        System.out.println("Wrong one bruther");
 
         logo = new ImageIcon("C:\\xtra\\Last_Chance\\BMS\\src\\icons\\allgood.jpg");
         addImage(logo, 25, 25, 100, 100); // Logo at top center

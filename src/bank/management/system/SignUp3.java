@@ -205,7 +205,7 @@ public class SignUp3 extends UI2 implements ActionListener{
                         con1.statement.executeUpdate(q1);
                         con1.statement.executeUpdate(q2);
                         JOptionPane.showMessageDialog(null,"Card Number: " +formattedCardNumber+"\n PIN: "+Pin);
-                        new Deposit(Pin);
+                        new Deposit(cardNumber);
                         setVisible(false);
                     }
                 } else if (b.getSource()==Cancel) {

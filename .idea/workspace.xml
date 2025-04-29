@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="ffc62982-22ae-4cef-a1f2-724b58b35a41" name="Changes" comment="trialPush1">
+      <change beforePath="$PROJECT_DIR$/.idea/material_theme_project_new.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/material_theme_project_new.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bank/management/system/Final/BalanceInquiryFinal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BalanceInquiryFinal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bank/management/system/Final/CashWithdrawalFinal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/CashWithdrawalFinal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bank/management/system/Final/ChangePinFinal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ChangePinFinal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bank/management/system/Final/ConnectionFinal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ConnectionFinal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bank/management/system/Final/DepositFinal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DepositFinal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bank/management/system/Final/FastCashFinal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/FastCashFinal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bank/management/system/Final/FunctionsAndUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/FunctionsAndUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bank/management/system/Final/HomePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/HomePage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bank/management/system/Final/LoginPageMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/LoginPageMain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bank/management/system/Final/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bank/management/system/Final/MiniStatementFinal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MiniStatementFinal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bank/management/system/Final/SignUpPage1.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SignUpPage1.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bank/management/system/Final/SignUpPage2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SignUpPage2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bank/management/system/Final/SignUpPage3.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SignUpPage3.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/icons/attributes" beforeDir="false" afterPath="$PROJECT_DIR$/src/icons/attributes" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/icons/error.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/icons/error.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/icons/logo1.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/icons/logo1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/icons/provider.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/icons/warningB.png" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="mainVersion3" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;history&quot;: [
+    {
+      &quot;state&quot;: &quot;OPEN&quot;,
+      &quot;assignee&quot;: &quot;Hmmmmmmmmmmmmmmmmmmmmmmm&quot;,
+      &quot;author&quot;: &quot;Hmmmmmmmmmmmmmmmmmmmmmmm&quot;
+    }
+  ],
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Hmmmmmmmmmmmmmmmmmmmmmmm&quot;,
+    &quot;author&quot;: &quot;Hmmmmmmmmmmmmmmmmmmmmmmm&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Hmmmmmmmmmmmmmmmmmmmmmmm/Project_1_Bank_Management_Sys.git&quot;,
+    &quot;accountId&quot;: &quot;1f1020e6-7e08-432e-b201-fc6f71d7072a&quot;
+  }
+}</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
+  <component name="ProjectId" id="2stuvfoRygTLflKP9DY0mktsQ6M" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.BalanceInquiry.executor&quot;: &quot;Run&quot;,
+    &quot;Application.CashWithDrawl.executor&quot;: &quot;Run&quot;,
+    &quot;Application.CashWithdrawal.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ChangePin.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Deposit.executor&quot;: &quot;Run&quot;,
+    &quot;Application.DepositFinal.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Driver.executor&quot;: &quot;Run&quot;,
+    &quot;Application.FastCash.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Login (1).executor&quot;: &quot;Run&quot;,
+    &quot;Application.Login (2).executor&quot;: &quot;Run&quot;,
+    &quot;Application.Login (3).executor&quot;: &quot;Run&quot;,
+    &quot;Application.Login (4).executor&quot;: &quot;Run&quot;,
+    &quot;Application.Login (5).executor&quot;: &quot;Run&quot;,
+    &quot;Application.Login.executor&quot;: &quot;Run&quot;,
+    &quot;Application.LoginFirst (1).executor&quot;: &quot;Run&quot;,
+    &quot;Application.LoginFirst.executor&quot;: &quot;Run&quot;,
+    &quot;Application.LoginPageMain.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Application.MiniStatement.executor&quot;: &quot;Run&quot;,
+    &quot;Application.MiniStatementFinal (1).executor&quot;: &quot;Run&quot;,
+    &quot;Application.MiniStatementFinal.executor&quot;: &quot;Run&quot;,
+    &quot;Application.SignUp.executor&quot;: &quot;Run&quot;,
+    &quot;Application.SignUp2.executor&quot;: &quot;Run&quot;,
+    &quot;Application.SignUp3.executor&quot;: &quot;Run&quot;,
+    &quot;Application.SignUpNew.executor&quot;: &quot;Run&quot;,
+    &quot;Application.SignUpPage1.executor&quot;: &quot;Run&quot;,
+    &quot;Application.SignUpPage2.executor&quot;: &quot;Run&quot;,
+    &quot;Application.SignUpPage3.executor&quot;: &quot;Run&quot;,
+    &quot;Application.TransactionMain.executor&quot;: &quot;Run&quot;,
+    &quot;Application.main.executor&quot;: &quot;Run&quot;,
+    &quot;Application.trialAllCurrent1.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;mainVersion3&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/xtra/Last_Chance/BMS/src/bank/management/system/SignUp2.java&quot;,
+    &quot;onboarding.tips.debug.path&quot;: &quot;C:/xtra/Last_Chance/BMS/src/Main.java&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+  }
+}</component>
+  <component name="RunManager" selected="Application.SignUpPage1">
+    <configuration name="LoginFirst" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="bank.management.system.LoginFirst" />
+      <module name="BMS" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="bank.management.system.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LoginPageMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="LoginPageMain" />
+      <module name="BMS" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value=".*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="BMS" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value=".*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MiniStatementFinal (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="bank.management.system.Final.MiniStatementFinal" />
+      <module name="BMS" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="bank.management.system.Final.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MiniStatementFinal" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="MiniStatementFinal" />
+      <module name="BMS" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value=".*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MiniStatementFinal" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="MiniStatementFinal" />
+      <module name="BMS" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value=".*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SignUpPage1" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="SignUpPage1" />
+      <module name="BMS" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.SignUpPage1" />
+        <item itemvalue="Application.LoginPageMain" />
+        <item itemvalue="Application.Main" />
+        <item itemvalue="Application.MiniStatementFinal (1)" />
+        <item itemvalue="Application.MiniStatementFinal" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ffc62982-22ae-4cef-a1f2-724b58b35a41" name="Changes" comment="" />
+      <created>1739287425848</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1739287425848</updated>
+    </task>
+    <task id="LOCAL-00001" summary="initialization">
+      <option name="closed" value="true" />
+      <created>1739825179043</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1739825179043</updated>
+    </task>
+    <task id="LOCAL-00002" summary="initialization">
+      <option name="closed" value="true" />
+      <created>1740387439504</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1740387439504</updated>
+    </task>
+    <task id="LOCAL-00003" summary="initialization">
+      <option name="closed" value="true" />
+      <created>1740509218408</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1740509218408</updated>
+    </task>
+    <task id="LOCAL-00004" summary="trialPush1">
+      <option name="closed" value="true" />
+      <created>1740509254085</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1740509254085</updated>
+    </task>
+    <task id="LOCAL-00005" summary="trialPush1">
+      <option name="closed" value="true" />
+      <created>1740864378885</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1740864378885</updated>
+    </task>
+    <task id="LOCAL-00006" summary="trialPush1">
+      <option name="closed" value="true" />
+      <created>1741000645195</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1741000645195</updated>
+    </task>
+    <task id="LOCAL-00007" summary="trialPush1">
+      <option name="closed" value="true" />
+      <created>1742257061169</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1742257061169</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="mainVersion2" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="initialization" />
+    <MESSAGE value="trialPush1" />
+    <option name="LAST_COMMIT_MESSAGE" value="trialPush1" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/SignUpPage2.java</url>
+          <line>85</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="bank.management.system.Final.FunctionsAndUI$13" memberName="listenerList" />
+      </pinned-members>
+    </pin-to-top-manager>
+  </component>
+</project>

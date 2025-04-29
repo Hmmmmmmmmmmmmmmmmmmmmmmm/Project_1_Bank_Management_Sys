@@ -1,3 +1,22 @@
-# Default ignored files
-/shelf/
-/workspace.xml
+# Ignore IntelliJ IDEA specific files
+.idea/
+*.iml
+
+# Ignore build output directories
+out/
+target/
+
+# Ignore compiled Java classes
+*.class
+
+# Ignore logs
+*.log
+
+# Ignore OS files
+.DS_Store
+Thumbs.db
+
+# Ignore Maven/Gradle folders if you use them
+.mvn/
+.gradle/
+build/

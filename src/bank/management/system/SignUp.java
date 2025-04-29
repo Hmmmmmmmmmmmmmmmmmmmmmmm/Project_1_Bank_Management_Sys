@@ -53,13 +53,16 @@ public class SignUp extends UI2 implements ActionListener{
         super(850, 800, "Sign Up page",true);
 
         //logo = new ImageIcon("C:\\xtra\\Last_Chance\\BMS\\src\\icons\\bank.png");
-        logo = new ImageIcon("C:\\xtra\\Last_Chance\\BMS\\src\\icons\\allgood.jpg");
+        logo = new ImageIcon("C:\\xtra\\Last_Chance\\BMS\\src\\icons\\logo1.jpg");
         addImage(logo, 25, 20, 100, 100); // Logo at top center
 
         //heading all centered!
-        addLabel("APPLICATION FORM NO."+first, "Times New Roman Bold", Font.PLAIN, 34, 100, 20, true, true, "#000000");
-        addLabel("Page 1.", "Times New Roman Bold", Font.PLAIN, 22, 330, 70, true, true, "#000000");
-        addLabel("Personal Details.", "Times New Roman Bold", Font.PLAIN, 22, 290, 100, true, true, "#000000");
+        addLabel("APPLICATION FORM NO."+first, "Times New Roman Bold", Font.PLAIN,
+                34, 100, 20, true, true, "#000000");
+        addLabel("Page 1.", "Times New Roman Bold", Font.PLAIN,
+                22, 330, 70, true, true, "#000000");
+        addLabel("Personal Details.", "Times New Roman Bold", Font.PLAIN,
+                22, 290, 100, true, true, "#000000");
 
         //text field with label time!!!
         //input section :
@@ -90,8 +93,11 @@ public class SignUp extends UI2 implements ActionListener{
         gender.add(gender2);
 
         //DOB date chooser class + label = amalgamation
-        dateChooser = addLabelWithTextFieldWithCalender("Date Of Birth:", "Times New Roman", Font.BOLD, 20,
-        100, 340, true,"black",400, 35, 220, 200);
+        dateChooser = addLabelWithTextFieldWithCalender2("Date Of Birth:",
+                "Times New Roman", Font.BOLD, 20,
+                100, 340, true,"black",
+                400, 35, 220,
+                200,false,200);
 
         //basic info
         emailAddress = addLabelWithTextField2("Email:", "Times New Roman", Font.BOLD, 20,
@@ -136,7 +142,7 @@ public class SignUp extends UI2 implements ActionListener{
 
 
 
-        ImageIcon backgroundImage = new ImageIcon("C:\\xtra\\Last_Chance\\BMS\\src\\icons\\gradientBG6.png"); // Replace with actual path
+        ImageIcon backgroundImage = new ImageIcon("C:\\xtra\\Last_Chance\\BMS\\src\\icons\\bg1.jpg"); // Replace with actual path
 
         addImage(backgroundImage, 0, 0, widthWindow, heightWindow);
         setVisible(true);

@@ -21,11 +21,12 @@ public class Deposit extends UI2 implements ActionListener {
     private JButton depositButton,BackButton;
 
     String pin;
-    Deposit(String pin){
+    String cardNumber;
+    Deposit(String cardNumber){
         //issues with image scalling
 //        super(1550,1080,"ATM");
         //cant use this condition
-        this.pin = pin;
+        this.cardNumber = cardNumber;
         addLabel("Enter the Amount you want to deposit", "Times New Roman Bold",
                 Font.PLAIN, 24,
                 440, 170, false, true,
@@ -101,7 +102,7 @@ public class Deposit extends UI2 implements ActionListener {
                         JOptionPane.showMessageDialog(null,"Rs. "+Amount+"/- Deposited Successfully");
 //                        new SignUp3(formNo);
                         setVisible(false);
-                        new TransactionMain(pin);
+                        new TransactionMain(cardNumber);
                     }
                 } else if (b.getSource()==BackButton) {
 //                    System.exit(0);

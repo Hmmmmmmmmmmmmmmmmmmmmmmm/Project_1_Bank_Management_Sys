@@ -17,10 +17,11 @@ public class CashWithdrawal extends UI2 implements ActionListener {
     private JButton withdrawalButton,BackButton;
 
     String pin;
+    String cardNumber;
 
-    CashWithdrawal(String pin){
+    CashWithdrawal(String cardNumber){
         super(1550,1080,"Main",false);
-        this.pin = pin;
+        this.cardNumber = cardNumber;
         addLabel("Please Enter Withdrawal Amount", "Times New Roman Bold",
                 Font.PLAIN, 24,
                 460, 185, false, true,
@@ -91,7 +92,7 @@ public class CashWithdrawal extends UI2 implements ActionListener {
                         int balance = 0;
                         while (resultSet.next()){
                             if(resultSet.getString("type").equals("Deposit")){
-                                balance = Integer.parseInt(resultSet.getString("amount"));
+                                balance = Integer.parseInt(resultSet.getString("amount").trim());
                             }else{
                                 balance-=Integer.parseInt(resultSet.getString("amount"));
                             }

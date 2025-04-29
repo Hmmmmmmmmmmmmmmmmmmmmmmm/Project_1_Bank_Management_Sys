@@ -27,7 +27,7 @@ public class MiniStatement extends UI2 implements ActionListener {
         JLabel label1=addLabelWhichReturns("", "Georgia",
                 Font.PLAIN, 13,
                 20, 140, false, true,
-                255, 255, 255,true);
+                0, 0, 0,true);
 
         JLabel label2=addLabelWhichReturns("Footprints and Trails",
                 "Moment Vintage",Font.PLAIN, 22,
@@ -43,13 +43,11 @@ public class MiniStatement extends UI2 implements ActionListener {
                 Font.PLAIN, 18,
                 20, 420, false, true,
                 0, 0, 0,true);
-        label1.repaint();
-        label3.setSize(label3.getPreferredSize());
-        Dimension d = label3.getPreferredSize();
-        label3.setSize(d.width, 250);
         label3.repaint();
 
-        label3.repaint();
+//        label1.repaint();
+
+//        label3.repaint();
         label4.repaint();
 
         try{
@@ -77,8 +75,11 @@ public class MiniStatement extends UI2 implements ActionListener {
             }
             NumberFormat nf = NumberFormat.getCurrencyInstance();
             label4.setText("Current balance: "+nf.format(balance));
+//            label1.setSize(label1.getPreferredSize());
+//            label1.repaint();
             label1.setSize(label1.getPreferredSize());
-            label1.repaint();
+            Dimension d = label1.getPreferredSize();
+            label1.setSize(d.width, 220);
             label3.setSize(label3.getPreferredSize());
             label3.repaint();
             label4.setSize(label4.getPreferredSize());
