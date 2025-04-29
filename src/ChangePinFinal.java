@@ -1,10 +1,3 @@
-package bank.management.system.Final;
-
-import bank.management.system.ChangePin;
-import bank.management.system.ConnectionTrial;
-import bank.management.system.TransactionMain;
-import bank.management.system.UI2;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

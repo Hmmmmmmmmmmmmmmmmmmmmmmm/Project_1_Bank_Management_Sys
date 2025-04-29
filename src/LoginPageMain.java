@@ -1,10 +1,3 @@
-package bank.management.system.Final;
-
-import bank.management.system.ConnectionTrial;
-import bank.management.system.SignUp;
-import bank.management.system.TransactionMain;
-import bank.management.system.UI2;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -46,13 +39,16 @@ public class LoginPageMain extends FunctionsAndUI implements ActionListener{
 
             // Create an ImageIcon with the logo (to set them as referable path)
             logo = new ImageIcon("src/icons/coolCatS.png");
-            addImage(logo, (widthWindow - 100) / 2-25, 10, 170, 170); // Logo at top center
+            addImage(logo, (widthWindow - 100) / 2-25, 5, 150, 150); // Logo at top center
             logo2 = new ImageIcon("src/icons/logo1.png");
-            addImage(logo2, 540, 380, 100, 100); // Logo at top center
+            addImage(logo2, 560, 400, 70, 70); // Logo at top center
 
             // Centered title
-            addLabelWhichReturns("Welcome to the Bank", "Moment Vintage", Font.PLAIN, 34,
-                    0, 150, true, true,
+            addLabelWhichReturns("Welcome to the ", "Moment Vintage", Font.PLAIN, 28,
+                    0, 130, true, true,
+                    0, 0, 0,true); // colorChange=false so these values are ignored (or you can use defaults)
+            addLabelWhichReturns("Footprints and Trails Bank", "Moment Vintage", Font.PLAIN, 28,
+                    0, 165, true, true,
                     0, 0, 0,true); // colorChange=false so these values are ignored (or you can use defaults)
 
             //input section :

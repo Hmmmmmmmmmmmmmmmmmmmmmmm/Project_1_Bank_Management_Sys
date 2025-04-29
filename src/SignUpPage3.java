@@ -1,10 +1,3 @@
-package bank.management.system.Final;
-
-import bank.management.system.ConnectionTrial;
-import bank.management.system.Deposit;
-import bank.management.system.SignUp3;
-import bank.management.system.UI2;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -154,7 +147,7 @@ public class SignUpPage3 extends FunctionsAndUI implements ActionListener{
 
 
 
-            ImageIcon backgroundImage = new ImageIcon("C:\\xtra\\Last_Chance\\BMS\\src\\icons\\bg1.jpg"); // Replace with actual path
+            ImageIcon backgroundImage = new ImageIcon("C:\\xtra\\Last_Chance\\BMS\\src\\icons\\BlurLeaves.jpg"); // Replace with actual path
 
             addImage(backgroundImage, 0, 0, widthWindow, heightWindow);
             setVisible(true);

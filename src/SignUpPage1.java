@@ -1,9 +1,3 @@
-package bank.management.system.Final;
-
-import bank.management.system.ConnectionTrial;
-import bank.management.system.SignUp;
-import bank.management.system.SignUp2;
-import bank.management.system.UI2;
 import com.toedter.calendar.JDateChooser;
 
 import javax.swing.*;
@@ -234,13 +228,14 @@ public SignUpPage1() {
     next.addActionListener((ActionListener) this);
 //        clearButton = addRoundedButton("Clear", "Times New Roman", Font.BOLD, 18, 300, 300, 150, 40, false);
 
-    // Add a new image at the bottom of the window, centered horizontally
-    ImageIcon bottomImage = new ImageIcon("src/icons/Group2.png"); // Replace with your image path
-    addImage(bottomImage, 0, heightWindow - 150, widthWindow, 150); // Image centered at bottom
+
+    //removing this image as apparently this is unprofessional!!!!
+//    ImageIcon bottomImage = new ImageIcon("src/icons/Group2.png");
+//    addImage(bottomImage, 0, heightWindow - 150, widthWindow, 150); // Image centered at bottom
 
 
 
-    ImageIcon backgroundImage = new ImageIcon("C:\\xtra\\Last_Chance\\BMS\\src\\icons\\bg1.jpg"); // Replace with actual path
+    ImageIcon backgroundImage = new ImageIcon("C:\\xtra\\Last_Chance\\BMS\\src\\icons\\BlurLeaves.jpg");
 
     addImage(backgroundImage, 0, 0, widthWindow, heightWindow);
     setVisible(true);

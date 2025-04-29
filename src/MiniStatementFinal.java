@@ -1,7 +1,3 @@
-package bank.management.system.Final;
-
-import bank.management.system.ConnectionTrial;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -13,7 +9,6 @@ import java.sql.ResultSet;
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Collections;
 
 
 public class MiniStatementFinal extends FunctionsAndUI implements ActionListener {

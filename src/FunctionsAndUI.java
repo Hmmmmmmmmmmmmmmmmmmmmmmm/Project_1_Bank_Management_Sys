@@ -1,4 +1,3 @@
-package bank.management.system.Final;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.*;
 import javax.swing.border.Border;

@@ -1,7 +1,3 @@
-package bank.management.system.Final;
-
-import bank.management.system.*;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
